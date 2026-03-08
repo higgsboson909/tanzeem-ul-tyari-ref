@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getMessageBracket, getBubbleInterval, sehriMessages, iftarMessages } from '@/data/ramadanMessages';
 
 interface FloatingBubble {
   id: number;
   message: string;
-  x: number; // percentage from left
   side: 'left' | 'right';
+  y: number; // random vertical offset %
 }
 
 interface MotivationalBubblesProps {
@@ -20,15 +20,14 @@ let bubbleId = 0;
 
 export default function MotivationalBubbles({
   totalMinutesLeft,
-  countdownType,
   isSehriActive,
   isIftarActive,
 }: MotivationalBubblesProps) {
   const [bubbles, setBubbles] = useState<FloatingBubble[]>([]);
+  const lastSide = useRef<'left' | 'right'>('right');
 
   const spawnBubble = useCallback(() => {
     let pool: string[];
-
     if (isSehriActive) {
       pool = sehriMessages;
     } else if (isIftarActive) {
@@ -38,56 +37,87 @@ export default function MotivationalBubbles({
     }
 
     const message = pool[Math.floor(Math.random() * pool.length)];
-    const side = Math.random() > 0.5 ? 'right' : 'left';
-    const x = side === 'left' ? Math.random() * 30 + 2 : Math.random() * 30 + 68;
+    // Alternate sides
+    const side: 'left' | 'right' = lastSide.current === 'left' ? 'right' : 'left';
+    lastSide.current = side;
 
     const newBubble: FloatingBubble = {
       id: ++bubbleId,
       message,
-      x,
       side,
+      y: Math.random() * 40 + 30, // 30%–70% from top
     };
 
-    setBubbles((prev) => [...prev.slice(-4), newBubble]); // keep max 5
+    setBubbles((prev) => [...prev.slice(-3), newBubble]);
   }, [totalMinutesLeft, isSehriActive, isIftarActive]);
 
-  // Remove bubble after animation
   const removeBubble = useCallback((id: number) => {
     setBubbles((prev) => prev.filter((b) => b.id !== id));
   }, []);
 
   useEffect(() => {
-    // Spawn one immediately
-    spawnBubble();
-
+    const t = setTimeout(() => spawnBubble(), 1500);
     const interval = getBubbleInterval(totalMinutesLeft);
     const timer = setInterval(spawnBubble, interval);
-    return () => clearInterval(timer);
+    return () => { clearTimeout(t); clearInterval(timer); };
   }, [spawnBubble, totalMinutesLeft]);
+
+  // Auto-dismiss each bubble after 6s
+  useEffect(() => {
+    if (bubbles.length === 0) return;
+    const latest = bubbles[bubbles.length - 1];
+    const timer = setTimeout(() => removeBubble(latest.id), 6000);
+    return () => clearTimeout(timer);
+  }, [bubbles, removeBubble]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
       <AnimatePresence>
-        {bubbles.map((bubble) => (
-          <motion.div
-            key={bubble.id}
-            initial={{ opacity: 0, y: 60, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -30, scale: 0.7 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            onAnimationComplete={() => {
-              setTimeout(() => removeBubble(bubble.id), 5000);
-            }}
-            className="absolute bottom-24 max-w-[280px] sm:max-w-xs"
-            style={{ left: `${bubble.x}%` }}
-          >
-            <div className="minecraft-border px-3 py-2 text-center">
-              <p className="minecraft-text text-mc-pixel text-foreground leading-relaxed">
-                {bubble.message}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+        {bubbles.map((bubble) => {
+          const isLeft = bubble.side === 'left';
+          return (
+            <motion.div
+              key={bubble.id}
+              initial={{
+                opacity: 0,
+                x: isLeft ? -120 : 120,
+                scale: 0.7,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                scale: 1,
+                y: [0, -8, 0, -4, 0], // subtle bounce
+              }}
+              exit={{
+                opacity: 0,
+                x: isLeft ? -80 : 80,
+                scale: 0.6,
+              }}
+              transition={{
+                opacity: { duration: 0.4 },
+                x: { type: 'spring', stiffness: 200, damping: 18 },
+                scale: { type: 'spring', stiffness: 200, damping: 18 },
+                y: { duration: 2, ease: 'easeInOut', repeat: Infinity },
+              }}
+              className="absolute max-w-[240px] sm:max-w-[280px]"
+              style={{
+                top: `${bubble.y}%`,
+                ...(isLeft ? { left: '0.75rem' } : { right: '0.75rem' }),
+              }}
+            >
+              <div
+                className={`minecraft-border px-3 py-2 ${
+                  isLeft ? 'rounded-tr-lg rounded-br-lg' : 'rounded-tl-lg rounded-bl-lg'
+                }`}
+              >
+                <p className="minecraft-text text-mc-pixel text-foreground leading-relaxed">
+                  {bubble.message}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
       </AnimatePresence>
     </div>
   );
