@@ -23,7 +23,7 @@ export default function CitySelector({
     >
       <div className="flex items-center gap-2">
         <MapPin className="w-4 h-4 text-accent" />
-        <span className="minecraft-text text-[10px] text-muted-foreground">
+        <span className="minecraft-text text-mc-small text-muted-foreground">
           {detecting ? 'DETECTING...' : 'YOUR CITY:'}
         </span>
       </div>
