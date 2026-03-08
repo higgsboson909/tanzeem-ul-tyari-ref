@@ -20,6 +20,7 @@ let bubbleId = 0;
 
 export default function MotivationalBubbles({
   totalMinutesLeft,
+  countdownType,
   isSehriActive,
   isIftarActive,
 }: MotivationalBubblesProps) {
@@ -33,7 +34,7 @@ export default function MotivationalBubbles({
     } else if (isIftarActive) {
       pool = iftarMessages;
     } else {
-      pool = getMessageBracket(totalMinutesLeft);
+      pool = getMessageBracket(totalMinutesLeft, countdownType);
     }
 
     const message = pool[Math.floor(Math.random() * pool.length)];
