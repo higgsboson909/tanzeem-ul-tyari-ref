@@ -7,7 +7,7 @@ import Navigation from "./components/Navigation";
 import HomePage from "./pages/HomePage";
 import RamadanPage from "./pages/RamadanPage";
 import ChaiLeaderPage from "./pages/ChaiLeaderPage";
-import QeemaHangoutPage from "./pages/QeemaHangoutPage";
+
 import JoinUsPage from "./pages/JoinUsPage";
 import NotFound from "./pages/NotFound";
 import { isRamadanActive } from "./lib/ramadanDates";
@@ -33,7 +33,7 @@ const App = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/ramadan" element={<RamadanPage />} />
             <Route path="/chai-leader" element={<ChaiLeaderPage />} />
-            <Route path="/qeema-hangout" element={<QeemaHangoutPage />} />
+            
             <Route path="/join-us" element={<JoinUsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
