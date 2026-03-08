@@ -20,7 +20,7 @@ export default function QeemaHangoutPage() {
         <h1 className="minecraft-text text-sm md:text-lg gradient-text mb-2">
           🍖 QEEMA HANGOUT SPOTS
         </h1>
-        <p className="minecraft-text text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground">
           BEST POST-EXAM QEEMA DESTINATIONS
         </p>
       </motion.div>
