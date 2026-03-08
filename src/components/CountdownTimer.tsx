@@ -20,7 +20,7 @@ export default function CountdownTimer({ secondsLeft, countdownType }: Countdown
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="gold-bracket-card corner-brackets-bottom p-6 md:p-8 text-center animate-pulse-gold"
+      className="gold-bracket-card corner-brackets-bottom p-6 md:p-8 text-center"
     >
       {/* Title */}
       <div className="minecraft-text text-mc-small md:text-xs text-accent chaos-text mb-2">

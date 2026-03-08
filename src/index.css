@@ -73,15 +73,12 @@
     min-height: 100vh;
     image-rendering: pixelated;
     overflow-x: hidden;
-    background:
-      radial-gradient(ellipse at 20% 0%, hsla(var(--mc-green), 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, hsla(var(--gold), 0.08) 0%, transparent 50%),
-      linear-gradient(
-        160deg,
-        hsl(var(--mc-darker)) 0%,
-        hsl(var(--mc-dark-bg)) 35%,
-        hsla(var(--mc-dark-green), 0.8) 100%
-      );
+    background: linear-gradient(
+      135deg,
+      hsl(var(--mc-darker)) 0%,
+      hsl(var(--mc-dark-bg)) 50%,
+      hsl(var(--mc-dark-green)) 100%
+    );
     background-attachment: fixed;
   }
 
