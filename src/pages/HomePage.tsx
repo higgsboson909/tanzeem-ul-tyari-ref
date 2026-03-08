@@ -33,10 +33,10 @@ export default function HomePage() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center space-y-4">
         
-        <img
-          src="/logo.png"
-          alt="Tanzeem-ul-Tyari"
-          className="w-24 h-24 md:w-32 md:h-32 mx-auto logo-glow animate-float" />
+        
+
+
+        
         
         <h1 className="minecraft-text md:text-xl gradient-text text-4xl">
           TANZEEM-UL-TYARI
