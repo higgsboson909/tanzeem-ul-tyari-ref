@@ -31,7 +31,8 @@ export default function HomePage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-4">
+        className="minecraft-border p-6 md:p-10 lg:p-14 text-center space-y-4"
+      >
         
         
 
