@@ -17,7 +17,7 @@ function formatTimeAMPM(time: string): string {
   return `${hour12.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${ampm}`;
 }
 
-export default function CountdownTimer({ secondsLeft, countdownType }: CountdownTimerProps) {
+export default function CountdownTimer({ secondsLeft, countdownType, rozaNumber, sehriTime, iftarTime, cityName }: CountdownTimerProps) {
   const hours = Math.floor(secondsLeft / 3600);
   const minutes = Math.floor((secondsLeft % 3600) / 60);
   const seconds = secondsLeft % 60;
