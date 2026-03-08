@@ -49,6 +49,12 @@ export default function RamadanPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <MotivationalBubbles
+        totalMinutesLeft={countdown.totalMinutes}
+        countdownType={countdownType}
+        isSehriActive={isSehriActive}
+        isIftarActive={isIftarActive}
+      />
       <BigCountdownOverlay seconds={secondsLeft} type={countdownType} />
 
       {showOverlay && (
