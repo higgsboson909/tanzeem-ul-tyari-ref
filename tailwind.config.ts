@@ -57,6 +57,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Minecraft theme colors
+        "mc-dark-green": "hsl(var(--mc-dark-green))",
+        "mc-green": "hsl(var(--mc-green))",
+        "mc-light-green": "hsl(var(--mc-light-green))",
+        "mc-beige": "hsl(var(--mc-beige))",
+        "mc-tan": "hsl(var(--mc-tan))",
+        gold: "hsl(var(--gold))",
+        "gold-light": "hsl(var(--gold-light))",
       },
       borderRadius: {
         lg: "var(--radius)",
