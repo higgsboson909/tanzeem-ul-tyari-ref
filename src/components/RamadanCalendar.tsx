@@ -92,26 +92,26 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
               return (
                 <tr
                   key={t.date}
-                  className={`border-b border-border/30 transition-colors ${
+                  className={`border-b transition-colors ${
                     isToday
-                      ? 'bg-primary/20 border-primary/50'
-                      : 'hover:bg-muted/30'
+                      ? 'bg-accent/15 border-accent/40 shadow-[inset_0_0_20px_hsla(var(--gold),0.1)]'
+                      : 'border-border/30 hover:bg-muted/30'
                   }`}
                 >
                   <td className={`minecraft-text text-mc-small p-2 md:p-3 ${isToday ? 'text-accent font-bold' : 'text-muted-foreground'}`}>
-                    {rozaNum}
-                    {isToday && ' ◄'}
+                    {isToday ? `🌙 ${rozaNum}` : rozaNum}
                   </td>
-                  <td className={`minecraft-text text-mc-small p-2 md:p-3 ${isToday ? 'text-accent' : 'text-foreground'}`}>
+                  <td className={`minecraft-text text-mc-small p-2 md:p-3 ${isToday ? 'text-accent font-bold' : 'text-foreground'}`}>
                     {formatDisplayDate(t.date)}
+                    {isToday && <span className="ml-1 text-mc-pixel text-accent animate-pulse">TODAY</span>}
                   </td>
-                  <td className="minecraft-text text-mc-small text-muted-foreground p-2 md:p-3">
+                  <td className={`minecraft-text text-mc-small p-2 md:p-3 ${isToday ? 'text-accent' : 'text-muted-foreground'}`}>
                     {getDayName(t.date)}
                   </td>
-                  <td className="minecraft-text text-mc-small text-foreground p-2 md:p-3 text-center">
+                  <td className={`minecraft-text text-mc-small p-2 md:p-3 text-center ${isToday ? 'text-accent font-bold' : 'text-foreground'}`}>
                     {formatTimeAMPM(t.sehri)}
                   </td>
-                  <td className="minecraft-text text-mc-small text-foreground p-2 md:p-3 text-center">
+                  <td className={`minecraft-text text-mc-small p-2 md:p-3 text-center ${isToday ? 'text-accent font-bold' : 'text-foreground'}`}>
                     {formatTimeAMPM(t.iftar)}
                   </td>
                 </tr>
