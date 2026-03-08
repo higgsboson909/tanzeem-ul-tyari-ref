@@ -42,10 +42,10 @@ export default function HomePage() {
         <h1 className="minecraft-text text-xl md:text-3xl lg:text-4xl gradient-text">
           TANZEEM-UL-TYARI
         </h1>
-        <p className="minecraft-text text-[10px] md:text-xs text-accent tracking-widest">
+        <p className="minecraft-text text-mc-small md:text-xs text-accent tracking-widest">
           ⚔ UNITED BY PANIC ⚔
         </p>
-        <p className="minecraft-text text-[7px] md:text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-mc-tiny md:text-mc-pixel text-muted-foreground">
           RAMADAN 2026 · FINAL EXAMS PREPARATION PORTAL
         </p>
       </motion.div>
