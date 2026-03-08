@@ -4,6 +4,17 @@ import { Clock, Sun, Star } from 'lucide-react';
 interface CountdownTimerProps {
   secondsLeft: number;
   countdownType: 'SEHRI' | 'IFTAR';
+  rozaNumber?: number | null;
+  sehriTime?: string | null;
+  iftarTime?: string | null;
+  cityName?: string;
+}
+
+function formatTimeAMPM(time: string): string {
+  const [h, m] = time.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour12 = h % 12 || 12;
+  return `${hour12.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${ampm}`;
 }
 
 export default function CountdownTimer({ secondsLeft, countdownType }: CountdownTimerProps) {
