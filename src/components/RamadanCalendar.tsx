@@ -46,7 +46,7 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
         animate={{ opacity: 1 }}
         className="minecraft-border p-6 text-center"
       >
-        <p className="minecraft-text text-[10px] text-muted-foreground">
+        <p className="minecraft-text text-mc-small text-muted-foreground">
           🎉 Ramadan 2026 has ended. May Allah accept your fasts!
         </p>
       </motion.div>
