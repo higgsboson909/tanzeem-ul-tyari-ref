@@ -5,6 +5,7 @@ import CitySelector from '@/components/CitySelector';
 import CountdownTimer from '@/components/CountdownTimer';
 import TodayTimingsCard from '@/components/TodayTimingsCard';
 import RamadanCalendar from '@/components/RamadanCalendar';
+import BigCountdownOverlay from '@/components/BigCountdownOverlay';
 import SehriIftarOverlay from '@/components/SehriIftarOverlay';
 import { useState } from 'react';
 
@@ -46,6 +47,10 @@ export default function HomePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      {/* Big 10-second countdown overlay */}
+      <BigCountdownOverlay seconds={secondsLeft} type={countdownType} />
+
+      {/* Celebration Overlay */}
       {showOverlay &&
         <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
       }
