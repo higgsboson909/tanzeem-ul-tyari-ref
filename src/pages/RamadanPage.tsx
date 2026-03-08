@@ -54,19 +54,8 @@ export default function RamadanPage() {
         <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
       )}
 
-      {/* Hero */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="minecraft-border p-6 md:p-10 text-center space-y-3"
-      >
-        <h1 className="minecraft-text text-xl md:text-3xl gradient-text">
-          🌙 RAMADAN 2026
-        </h1>
-        <p className="minecraft-text text-mc-small md:text-xs text-accent tracking-widest">
-          SEHRI & IFTAR TIMINGS
-        </p>
-      </motion.div>
+      {/* Daily Dua */}
+      {todayTiming && <DailyDuaCard rozaNumber={todayTiming.day} />}
 
       {/* City Selector */}
       <CitySelector
@@ -77,10 +66,6 @@ export default function RamadanPage() {
         onFiqhChange={changeFiqh}
         detecting={detecting}
       />
-
-      {/* Daily Dua */}
-      {todayTiming && <DailyDuaCard rozaNumber={todayTiming.day} />}
-
       {/* Countdown */}
       <CountdownTimer secondsLeft={secondsLeft} countdownType={countdownType} />
 
