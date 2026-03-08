@@ -7,7 +7,7 @@ import Navigation from "./components/Navigation";
 import HomePage from "./pages/HomePage";
 import RamadanPage from "./pages/RamadanPage";
 import ChaiLeaderPage from "./pages/ChaiLeaderPage";
-import QeemaHangoutPage from "./pages/QeemaHangoutPage";
+
 import JoinUsPage from "./pages/JoinUsPage";
 import NotFound from "./pages/NotFound";
 import { isRamadanActive } from "./lib/ramadanDates";
