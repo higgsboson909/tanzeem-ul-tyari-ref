@@ -19,7 +19,6 @@ export default function CitySelector({
   currentFiqh,
   onFiqhChange,
   detecting,
-  onDetectLocation,
 }: CitySelectorProps) {
   return (
     <motion.div
