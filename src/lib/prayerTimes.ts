@@ -1,6 +1,8 @@
 import ramadanData from '@/data/ramadanTimings.json';
 import { cityToKey, type CityName } from '@/data/pakistanCities';
 
+export type Fiqh = 'hanafi' | 'jafri';
+
 export interface DayTiming {
   day: number;
   date: string;   // YYYY-MM-DD
@@ -10,6 +12,7 @@ export interface DayTiming {
 
 export interface RamadanTimetable {
   city: string;
+  fiqh: Fiqh;
   timings: DayTiming[];
 }
 
@@ -41,27 +44,28 @@ function parseDate(dateStr: string): string {
 }
 
 /**
- * Get the Ramadan timetable for a city from hardcoded JSON (hanafi)
+ * Get the Ramadan timetable for a city from hardcoded JSON
  */
-export function getRamadanTimetable(city: CityName): RamadanTimetable {
+export function getRamadanTimetable(city: CityName, fiqh: Fiqh = 'hanafi'): RamadanTimetable {
   const key = cityToKey(city);
-  const cityData = (ramadanData.cities as Record<string, { hanafi: Array<{ day: number; sehri: string; iftar: string; date: string }> }>)[key];
+  const cityData = (ramadanData.cities as Record<string, Record<string, Array<{ day: number; sehri: string; iftar: string; date: string }>>>)[key];
 
-  if (!cityData) {
-    return { city, timings: [] };
+  if (!cityData || !cityData[fiqh]) {
+    return { city, fiqh, timings: [] };
   }
 
-  const timings: DayTiming[] = cityData.hanafi.map((entry) => ({
+  const timings: DayTiming[] = cityData[fiqh].map((entry) => ({
     day: entry.day,
     date: parseDate(entry.date),
     sehri: parseAmPm(entry.sehri),
     iftar: parseAmPm(entry.iftar),
   }));
 
-  return { city, timings };
+  return { city, fiqh, timings };
 }
 
 const CITY_PREF_KEY = 'tanzeem_selected_city';
+const FIQH_PREF_KEY = 'tanzeem_selected_fiqh';
 
 export function getSavedCity(): string | null {
   return localStorage.getItem(CITY_PREF_KEY);
@@ -69,4 +73,13 @@ export function getSavedCity(): string | null {
 
 export function saveCity(cityName: string) {
   localStorage.setItem(CITY_PREF_KEY, cityName);
+}
+
+export function getSavedFiqh(): Fiqh {
+  const val = localStorage.getItem(FIQH_PREF_KEY);
+  return val === 'jafri' ? 'jafri' : 'hanafi';
+}
+
+export function saveFiqh(fiqh: Fiqh) {
+  localStorage.setItem(FIQH_PREF_KEY, fiqh);
 }
