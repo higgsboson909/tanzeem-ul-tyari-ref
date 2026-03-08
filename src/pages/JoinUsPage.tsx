@@ -48,8 +48,8 @@ export default function JoinUsPage() {
               className="minecraft-border p-6 text-center card-hover"
             >
               <Icon className="w-8 h-8 mx-auto mb-4 text-accent" />
-              <div className="minecraft-text text-[10px] text-foreground mb-2">{feat.title}</div>
-              <div className="minecraft-text text-[8px] text-muted-foreground">{feat.desc}</div>
+              <div className="minecraft-text text-mc-small text-foreground mb-2">{feat.title}</div>
+              <div className="minecraft-text text-mc-pixel text-muted-foreground">{feat.desc}</div>
             </motion.div>
           );
         })}
