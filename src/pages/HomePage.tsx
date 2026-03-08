@@ -12,10 +12,12 @@ import { useState } from 'react';
 export default function HomePage() {
   const {
     city,
+    fiqh,
     timetable,
     detecting,
     todayTiming,
     changeCity,
+    changeFiqh,
     cities,
   } = usePrayerTimes();
 
@@ -77,6 +79,8 @@ export default function HomePage() {
         currentCity={city}
         cities={cities}
         onCityChange={changeCity}
+        currentFiqh={fiqh}
+        onFiqhChange={changeFiqh}
         detecting={detecting} />
 
       {/* Countdown */}

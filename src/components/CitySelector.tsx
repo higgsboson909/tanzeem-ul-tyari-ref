@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { MapPin, ChevronDown } from 'lucide-react';
 import type { CityName } from '@/data/pakistanCities';
+import type { Fiqh } from '@/lib/prayerTimes';
 
 interface CitySelectorProps {
   currentCity: CityName;
   cities: readonly CityName[];
   onCityChange: (cityName: string) => void;
+  currentFiqh: Fiqh;
+  onFiqhChange: (fiqh: Fiqh) => void;
   detecting: boolean;
 }
 
@@ -13,6 +16,8 @@ export default function CitySelector({
   currentCity,
   cities,
   onCityChange,
+  currentFiqh,
+  onFiqhChange,
   detecting,
 }: CitySelectorProps) {
   return (
@@ -44,6 +49,30 @@ export default function CitySelector({
           ))}
         </select>
         <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-accent pointer-events-none" />
+      </div>
+
+      {/* Fiqh Toggle */}
+      <div className="flex items-center minecraft-border overflow-hidden">
+        <button
+          onClick={() => onFiqhChange('hanafi')}
+          className={`minecraft-text text-mc-small px-3 py-2 transition-colors ${
+            currentFiqh === 'hanafi'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-card text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          HANAFI
+        </button>
+        <button
+          onClick={() => onFiqhChange('jafri')}
+          className={`minecraft-text text-mc-small px-3 py-2 transition-colors ${
+            currentFiqh === 'jafri'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-card text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          JAFRI
+        </button>
       </div>
     </motion.div>
   );
