@@ -21,7 +21,7 @@ export default function ChaiLeaderPage() {
         <h1 className="minecraft-text text-sm md:text-lg gradient-text mb-2">
           ☕ CHAI LEADERBOARD
         </h1>
-        <p className="minecraft-text text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground">
           WHO DRINKS THE MOST CHAI DURING STUDY SESSIONS?
         </p>
       </motion.div>
