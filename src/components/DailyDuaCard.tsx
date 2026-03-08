@@ -21,11 +21,6 @@ export default function DailyDuaCard({ rozaNumber }: DailyDuaCardProps) {
       <p className="islamic-text text-base md:text-lg text-foreground leading-relaxed">
         {dua}
       </p>
-      {reference && (
-        <p className="minecraft-text text-mc-micro text-muted-foreground">
-          {reference}
-        </p>
-      )}
     </motion.div>
   );
 }
