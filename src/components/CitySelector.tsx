@@ -79,7 +79,6 @@ export default function CitySelector({
           ? <VolumeX className="w-4 h-4 text-destructive" />
           : <Volume2 className="w-4 h-4 text-accent" />}
       </button>
-      </div>
 
 
       {/* Polished Fiqh Toggle with sliding indicator */}
