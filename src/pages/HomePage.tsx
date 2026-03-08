@@ -17,28 +17,28 @@ export default function HomePage() {
     changeCity,
     cities,
     showOverlay,
-    dismissOverlay,
+    dismissOverlay
   } = usePrayerTimes();
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Celebration Overlay */}
-      {showOverlay && (
-        <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
-      )}
+      {showOverlay &&
+      <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
+      }
 
       {/* Hero */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-4"
-      >
+        className="text-center space-y-4">
+        
         <img
           src="/logo.png"
           alt="Tanzeem-ul-Tyari"
-          className="w-24 h-24 md:w-32 md:h-32 mx-auto logo-glow animate-float"
-        />
-        <h1 className="minecraft-text text-sm md:text-xl gradient-text">
+          className="w-24 h-24 md:w-32 md:h-32 mx-auto logo-glow animate-float" />
+        
+        <h1 className="minecraft-text md:text-xl gradient-text text-4xl">
           TANZEEM-UL-TYARI
         </h1>
         <p className="islamic-text text-lg md:text-2xl text-accent">
@@ -54,8 +54,8 @@ export default function HomePage() {
         currentCity={city}
         cities={cities}
         onCityChange={changeCity}
-        detecting={detecting}
-      />
+        detecting={detecting} />
+      
 
       {/* Countdown */}
       <CountdownTimer secondsLeft={secondsLeft} countdownType={countdownType} />
@@ -71,8 +71,8 @@ export default function HomePage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
-        className="islamic-border p-6 text-center"
-      >
+        className="islamic-border p-6 text-center">
+        
         <p className="islamic-text text-lg md:text-xl text-accent mb-2">
           ﷽
         </p>
@@ -83,6 +83,6 @@ export default function HomePage() {
           — Surah Al-Baqarah 2:183
         </p>
       </motion.div>
-    </div>
-  );
+    </div>);
+
 }
