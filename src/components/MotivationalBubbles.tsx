@@ -45,7 +45,7 @@ export default function MotivationalBubbles({
       id: ++bubbleId,
       message,
       side,
-      y: Math.random() * 30 + 55, // 55%–85% from top (bottom half)
+      y: Math.random() * 20 + 70, // 70%–90% from top (bottom of page)
     };
 
     setBubbles((prev) => [...prev.slice(-3), newBubble]);
