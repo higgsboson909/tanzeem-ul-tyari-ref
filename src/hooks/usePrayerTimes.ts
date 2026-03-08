@@ -15,11 +15,7 @@ export function usePrayerTimes() {
   const [city, setCity] = useState<CityData>(DEFAULT_CITY);
   const [timetable, setTimetable] = useState<RamadanTimetable | null>(null);
   const [detecting, setDetecting] = useState(true);
-  const [countdownType, setCountdownType] = useState<'SEHRI' | 'IFTAR'>('SEHRI');
-  const [secondsLeft, setSecondsLeft] = useState(0);
   const [todayTiming, setTodayTiming] = useState<DayTiming | null>(null);
-  const [showOverlay, setShowOverlay] = useState<'sehri' | 'iftar' | null>(null);
-  const [overlayDismissed, setOverlayDismissed] = useState<string | null>(null);
 
   // Load or generate timetable for a city
   const loadTimetable = useCallback((cityData: CityData) => {
@@ -101,51 +97,27 @@ export function usePrayerTimes() {
     [loadTimetable]
   );
 
-  // Update countdown every second
+  // Update today's timing
   useEffect(() => {
     if (!timetable) return;
 
     const update = () => {
-      const next = getNextTimings(timetable);
-      setCountdownType(next.countdownType);
-      setSecondsLeft(next.secondsLeft);
-
       const todayStr = new Date().toISOString().slice(0, 10);
       const today = timetable.timings.find((t) => t.date === todayStr) || null;
       setTodayTiming(today);
-
-      // Show celebration overlay when countdown reaches 0
-      if (next.secondsLeft <= 0 && today) {
-        const overlayKey = `${todayStr}-${next.countdownType}`;
-        if (overlayDismissed !== overlayKey) {
-          setShowOverlay(next.countdownType === 'IFTAR' ? 'iftar' : 'sehri');
-        }
-      } else if (next.secondsLeft > 0) {
-        setShowOverlay(null);
-      }
     };
 
     update();
-    const interval = setInterval(update, 1000);
+    const interval = setInterval(update, 60000); // check every minute
     return () => clearInterval(interval);
-  }, [timetable, overlayDismissed]);
-
-  const dismissOverlay = useCallback(() => {
-    const todayStr = new Date().toISOString().slice(0, 10);
-    setOverlayDismissed(`${todayStr}-${countdownType}`);
-    setShowOverlay(null);
-  }, [countdownType]);
+  }, [timetable]);
 
   return {
     city,
     timetable,
     detecting,
-    countdownType,
-    secondsLeft,
     todayTiming,
     changeCity,
     cities: PAKISTAN_CITIES,
-    showOverlay,
-    dismissOverlay,
   };
 }

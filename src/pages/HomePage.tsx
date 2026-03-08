@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { usePrayerTimes } from '@/hooks/usePrayerTimes';
 import { useRamadanState } from '@/hooks/useRamadanState';
-import { ramadanTimings } from '@/data/ramadanTimings';
 import CitySelector from '@/components/CitySelector';
 import CountdownTimer from '@/components/CountdownTimer';
 import TodayTimingsCard from '@/components/TodayTimingsCard';
@@ -20,35 +19,33 @@ export default function HomePage() {
   } = usePrayerTimes();
 
   const {
-    todayIndex,
     countdown,
     isSehriActive,
     isIftarActive,
-  } = useRamadanState();
+  } = useRamadanState(todayTiming);
 
   const [overlayDismissed, setOverlayDismissed] = useState<string | null>(null);
 
-  // Determine overlay state from useRamadanState
-  const todayKey = ramadanTimings[todayIndex]?.date ?? '';
-  const sehriOverlayKey = `${todayKey}-sehri`;
-  const iftarOverlayKey = `${todayKey}-iftar`;
+  // Determine overlay from 5-min active windows
+  const todayDate = todayTiming?.date ?? '';
+  const sehriKey = `${todayDate}-sehri`;
+  const iftarKey = `${todayDate}-iftar`;
 
   let showOverlay: 'sehri' | 'iftar' | null = null;
-  if (isSehriActive && overlayDismissed !== sehriOverlayKey) showOverlay = 'sehri';
-  if (isIftarActive && overlayDismissed !== iftarOverlayKey) showOverlay = 'iftar';
+  if (isSehriActive && overlayDismissed !== sehriKey) showOverlay = 'sehri';
+  if (isIftarActive && overlayDismissed !== iftarKey) showOverlay = 'iftar';
 
   const dismissOverlay = () => {
-    if (isSehriActive) setOverlayDismissed(sehriOverlayKey);
-    if (isIftarActive) setOverlayDismissed(iftarOverlayKey);
+    if (isSehriActive) setOverlayDismissed(sehriKey);
+    if (isIftarActive) setOverlayDismissed(iftarKey);
   };
 
-  // Convert countdown to secondsLeft for CountdownTimer component
+  // Convert countdown for CountdownTimer component
   const secondsLeft = countdown.hours * 3600 + countdown.minutes * 60 + countdown.seconds;
   const countdownType = countdown.type === 'IFTAR' ? 'IFTAR' as const : 'SEHRI' as const;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
-      {/* Celebration Overlay */}
       {showOverlay &&
         <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
       }
