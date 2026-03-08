@@ -21,6 +21,24 @@ export default function CitySelector({
   onFiqhChange,
   detecting,
 }: CitySelectorProps) {
+  const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const toggleAzaan = () => {
+    if (playing) {
+      audioRef.current?.pause();
+      audioRef.current = null;
+      setPlaying(false);
+    } else {
+      const audio = new Audio('/azaan.mp3');
+      audio.volume = 0.7;
+      audio.onended = () => setPlaying(false);
+      audio.play().catch(() => setPlaying(false));
+      audioRef.current = audio;
+      setPlaying(true);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
