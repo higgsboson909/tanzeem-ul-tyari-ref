@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Coffee, UserPlus, Moon } from 'lucide-react';
-import { isRamadanActive } from '@/lib/ramadanDates';
+import { Home, Coffee, UserPlus, Moon, PartyPopper } from 'lucide-react';
+import { isRamadanActive, RAMADAN_END } from '@/lib/ramadanDates';
 
 export default function Navigation() {
   const location = useLocation();
