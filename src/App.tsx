@@ -39,15 +39,15 @@ const App = () => {
           </Routes>
 
           {/* Footer */}
-          <footer className="max-w-4xl mx-auto px-4 py-8 mt-12">
-            <div className="text-center space-y-2">
-              <p className="minecraft-text text-mc-pixel text-muted-foreground">
+          <footer className="max-w-4xl mx-auto px-4 py-12 mt-16">
+            <div className="text-center space-y-3">
+              <p className="minecraft-text text-mc-small md:text-xs text-accent chaos-text">
                 TANZEEM-UL-TYARI
               </p>
-              <p className="minecraft-text text-mc-tiny text-muted-foreground">
+              <p className="minecraft-text text-mc-pixel md:text-mc-small text-muted-foreground">
                 United by Panic | Est. 5th Semester Finals
               </p>
-              <p className="minecraft-text text-mc-pixel text-accent mt-3">
+              <p className="minecraft-text text-mc-small md:text-xs text-accent mt-4">
                 "We survived, somehow."
               </p>
             </div>

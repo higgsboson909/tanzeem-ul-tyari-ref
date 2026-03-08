@@ -45,7 +45,7 @@ export default function MotivationalBubbles({
       id: ++bubbleId,
       message,
       side,
-      y: Math.random() * 40 + 30, // 30%–70% from top
+      y: Math.random() * 30 + 55, // 55%–85% from top (bottom half)
     };
 
     setBubbles((prev) => [...prev.slice(-3), newBubble]);
@@ -100,18 +100,25 @@ export default function MotivationalBubbles({
                 scale: { type: 'spring', stiffness: 200, damping: 18 },
                 y: { duration: 2, ease: 'easeInOut', repeat: Infinity },
               }}
-              className="absolute max-w-[240px] sm:max-w-[280px]"
+              className="absolute max-w-[240px] sm:max-w-[280px] pointer-events-auto"
               style={{
                 top: `${bubble.y}%`,
                 ...(isLeft ? { left: '0.75rem' } : { right: '0.75rem' }),
               }}
             >
               <div
-                className={`minecraft-border px-4 py-3 ${
+                className={`minecraft-border px-4 py-3 relative ${
                   isLeft ? 'rounded-tr-lg rounded-br-lg' : 'rounded-tl-lg rounded-bl-lg'
                 }`}
                 style={{ background: 'hsla(0,0%,5%,0.95)' }}
               >
+                <button
+                  onClick={() => removeBubble(bubble.id)}
+                  className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-accent/80 text-accent-foreground flex items-center justify-center text-xs hover:bg-accent transition-colors"
+                  aria-label="Dismiss"
+                >
+                  ✕
+                </button>
                 <p className="minecraft-text text-mc-small text-accent leading-relaxed drop-shadow-[0_0_6px_hsla(var(--gold),0.5)]">
                   {bubble.message}
                 </p>
