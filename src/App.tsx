@@ -36,6 +36,7 @@ const App = () => {
             <Route path="/chai-leader" element={<ChaiLeaderPage />} />
             
             <Route path="/join-us" element={<JoinUsPage />} />
+            <Route path="/eid-poster-generator" element={<EidPosterPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
 

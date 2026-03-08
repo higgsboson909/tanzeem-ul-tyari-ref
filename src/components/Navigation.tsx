@@ -7,14 +7,19 @@ export default function Navigation() {
   const location = useLocation();
   const ramadanActive = isRamadanActive();
 
+  const today = new Date().toISOString().slice(0, 10);
+  const isLastRoza = today === RAMADAN_END;
+
   const navItems = [
     ...(ramadanActive
       ? [{ to: '/ramadan', icon: Moon, label: 'RAMADAN' }]
       : []),
     { to: ramadanActive ? '/home' : '/', icon: Home, label: 'HOME' },
     { to: '/chai-leader', icon: Coffee, label: 'CHAI' },
-    
     { to: '/join-us', icon: UserPlus, label: 'JOIN US' },
+    ...(isLastRoza
+      ? [{ to: '/eid-poster-generator', icon: PartyPopper, label: 'EID 🎉' }]
+      : []),
   ];
 
   return (
