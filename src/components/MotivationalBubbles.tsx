@@ -107,11 +107,12 @@ export default function MotivationalBubbles({
               }}
             >
               <div
-                className={`minecraft-border px-3 py-2 ${
+                className={`minecraft-border px-4 py-3 ${
                   isLeft ? 'rounded-tr-lg rounded-br-lg' : 'rounded-tl-lg rounded-bl-lg'
                 }`}
+                style={{ background: 'hsla(0,0%,5%,0.95)' }}
               >
-                <p className="minecraft-text text-mc-pixel text-foreground leading-relaxed">
+                <p className="minecraft-text text-mc-small text-accent leading-relaxed drop-shadow-[0_0_6px_hsla(var(--gold),0.5)]">
                   {bubble.message}
                 </p>
               </div>
