@@ -1,6 +1,5 @@
-import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, ChevronDown, Volume2, VolumeX } from 'lucide-react';
+import { MapPin, ChevronDown } from 'lucide-react';
 import type { CityName } from '@/data/pakistanCities';
 import type { Fiqh } from '@/lib/prayerTimes';
 
