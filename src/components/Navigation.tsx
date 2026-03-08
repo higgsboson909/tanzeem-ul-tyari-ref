@@ -13,7 +13,7 @@ export default function Navigation() {
       : []),
     { to: ramadanActive ? '/home' : '/', icon: Home, label: 'HOME' },
     { to: '/chai-leader', icon: Coffee, label: 'CHAI' },
-    { to: '/qeema-hangout', icon: Utensils, label: 'QEEMA' },
+    
     { to: '/join-us', icon: UserPlus, label: 'JOIN US' },
   ];
 
