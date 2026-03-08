@@ -51,24 +51,30 @@ export default function CitySelector({
         <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-accent pointer-events-none" />
       </div>
 
-      {/* Fiqh Toggle */}
-      <div className="flex items-center minecraft-border overflow-hidden">
+      {/* Polished Fiqh Toggle with sliding indicator */}
+      <div className="relative flex items-center minecraft-border overflow-hidden">
+        {/* Sliding background indicator */}
+        <motion.div
+          className="absolute top-0 bottom-0 w-1/2 bg-primary"
+          animate={{ x: currentFiqh === 'hanafi' ? 0 : '100%' }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        />
         <button
           onClick={() => onFiqhChange('hanafi')}
-          className={`minecraft-text text-mc-small px-3 py-2 transition-colors ${
+          className={`relative z-10 minecraft-text text-mc-small px-4 py-2 transition-colors duration-200 ${
             currentFiqh === 'hanafi'
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-card text-muted-foreground hover:text-foreground'
+              ? 'text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           HANAFI
         </button>
         <button
           onClick={() => onFiqhChange('jafri')}
-          className={`minecraft-text text-mc-small px-3 py-2 transition-colors ${
+          className={`relative z-10 minecraft-text text-mc-small px-4 py-2 transition-colors duration-200 ${
             currentFiqh === 'jafri'
-              ? 'bg-primary text-primary-foreground'
-              : 'bg-card text-muted-foreground hover:text-foreground'
+              ? 'text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           JAFRI
