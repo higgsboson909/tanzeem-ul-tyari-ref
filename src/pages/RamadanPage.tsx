@@ -73,6 +73,7 @@ export default function RamadanPage() {
         currentFiqh={fiqh}
         onFiqhChange={changeFiqh}
         detecting={detecting}
+        onDetectLocation={detectLocation}
       />
       {/* Countdown with Roza info */}
       <CountdownTimer
