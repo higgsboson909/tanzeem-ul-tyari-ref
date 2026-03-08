@@ -130,7 +130,7 @@ export default function SehriIftarOverlay({ type, onDismiss }: SehriIftarOverlay
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="minecraft-text text-[10px] md:text-xs text-muted-foreground"
+                className="minecraft-text text-mc-small md:text-xs text-muted-foreground"
               >
                 {messages[currentMsgIdx]}
               </motion.p>
