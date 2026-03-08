@@ -41,10 +41,6 @@ const App = () => (
                 { name: 'Ahsan Ilahi', title: 'The Genius', persona: 'The mind behind the madness', icon: '🧠' },
                 { name: 'Jhangir Ahmed', title: 'Higgs Boson', persona: 'Group spokesperson', icon: '⚛️' },
                 { name: 'Faizan Ali', title: 'The Manager', persona: 'Keeping the chaos organized', icon: '📋' },
-                { name: 'Usman Tariq', title: 'The Night Owl', persona: 'Studies only after midnight', icon: '🦉' },
-                { name: 'Hamza Sheikh', title: 'The Negotiator', persona: 'Gets extensions from every professor', icon: '🤝' },
-                { name: 'Ali Raza', title: 'The Clutch Player', persona: 'Passes every exam by 1 mark', icon: '🎯' },
-                { name: 'Zain Abbas', title: 'The Meme Lord', persona: 'Copes through humor exclusively', icon: '😂' },
               ].map((member) => (
                 <div
                   key={member.name}
