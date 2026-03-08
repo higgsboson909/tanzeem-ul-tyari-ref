@@ -68,19 +68,19 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
         <table className="w-full border-collapse">
           <thead>
             <tr>
-              <th className="minecraft-text text-mc-pixel text-muted-foreground p-2 text-left border-b border-border">
+              <th className="minecraft-text text-mc-small text-muted-foreground p-2 md:p-3 text-left border-b border-border">
                 ROZA
               </th>
-              <th className="minecraft-text text-mc-pixel text-muted-foreground p-2 text-left border-b border-border">
+              <th className="minecraft-text text-mc-small text-muted-foreground p-2 md:p-3 text-left border-b border-border">
                 DATE
               </th>
-              <th className="minecraft-text text-mc-pixel text-muted-foreground p-2 text-left border-b border-border">
+              <th className="minecraft-text text-mc-small text-muted-foreground p-2 md:p-3 text-left border-b border-border">
                 DAY
               </th>
-              <th className="minecraft-text text-mc-pixel text-muted-foreground p-2 text-center border-b border-border">
+              <th className="minecraft-text text-mc-small text-muted-foreground p-2 md:p-3 text-center border-b border-border">
                 SEHRI
               </th>
-              <th className="minecraft-text text-mc-pixel text-muted-foreground p-2 text-center border-b border-border">
+              <th className="minecraft-text text-mc-small text-muted-foreground p-2 md:p-3 text-center border-b border-border">
                 IFTAR
               </th>
             </tr>
