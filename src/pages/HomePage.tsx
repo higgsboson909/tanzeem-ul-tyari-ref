@@ -1,30 +1,56 @@
 import { motion } from 'framer-motion';
 import { usePrayerTimes } from '@/hooks/usePrayerTimes';
+import { useRamadanState } from '@/hooks/useRamadanState';
+import { ramadanTimings } from '@/data/ramadanTimings';
 import CitySelector from '@/components/CitySelector';
 import CountdownTimer from '@/components/CountdownTimer';
 import TodayTimingsCard from '@/components/TodayTimingsCard';
 import RamadanCalendar from '@/components/RamadanCalendar';
 import SehriIftarOverlay from '@/components/SehriIftarOverlay';
+import { useState } from 'react';
 
 export default function HomePage() {
   const {
     city,
     timetable,
     detecting,
-    countdownType,
-    secondsLeft,
     todayTiming,
     changeCity,
     cities,
-    showOverlay,
-    dismissOverlay
   } = usePrayerTimes();
+
+  const {
+    todayIndex,
+    countdown,
+    isSehriActive,
+    isIftarActive,
+  } = useRamadanState();
+
+  const [overlayDismissed, setOverlayDismissed] = useState<string | null>(null);
+
+  // Determine overlay state from useRamadanState
+  const todayKey = ramadanTimings[todayIndex]?.date ?? '';
+  const sehriOverlayKey = `${todayKey}-sehri`;
+  const iftarOverlayKey = `${todayKey}-iftar`;
+
+  let showOverlay: 'sehri' | 'iftar' | null = null;
+  if (isSehriActive && overlayDismissed !== sehriOverlayKey) showOverlay = 'sehri';
+  if (isIftarActive && overlayDismissed !== iftarOverlayKey) showOverlay = 'iftar';
+
+  const dismissOverlay = () => {
+    if (isSehriActive) setOverlayDismissed(sehriOverlayKey);
+    if (isIftarActive) setOverlayDismissed(iftarOverlayKey);
+  };
+
+  // Convert countdown to secondsLeft for CountdownTimer component
+  const secondsLeft = countdown.hours * 3600 + countdown.minutes * 60 + countdown.seconds;
+  const countdownType = countdown.type === 'IFTAR' ? 'IFTAR' as const : 'SEHRI' as const;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Celebration Overlay */}
       {showOverlay &&
-      <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
+        <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
       }
 
       {/* Hero */}
@@ -33,12 +59,6 @@ export default function HomePage() {
         animate={{ opacity: 1, y: 0 }}
         className="minecraft-border p-6 md:p-10 lg:p-14 text-center space-y-4"
       >
-        
-        
-
-
-        
-        
         <h1 className="minecraft-text text-xl md:text-3xl lg:text-4xl gradient-text">
           TANZEEM-UL-TYARI
         </h1>
@@ -56,7 +76,6 @@ export default function HomePage() {
         cities={cities}
         onCityChange={changeCity}
         detecting={detecting} />
-      
 
       {/* Countdown */}
       <CountdownTimer secondsLeft={secondsLeft} countdownType={countdownType} />
@@ -99,7 +118,6 @@ export default function HomePage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
         className="islamic-border p-6 text-center">
-        
         <p className="islamic-text text-lg md:text-xl text-accent mb-2">
           ﷽
         </p>
@@ -110,6 +128,6 @@ export default function HomePage() {
           — Surah Al-Baqarah 2:183
         </p>
       </motion.div>
-    </div>);
-
+    </div>
+  );
 }
