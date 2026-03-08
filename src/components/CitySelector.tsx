@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { MapPin, ChevronDown } from 'lucide-react';
-import type { CityData } from '@/data/pakistanCities';
+import type { CityName } from '@/data/pakistanCities';
 
 interface CitySelectorProps {
-  currentCity: CityData;
-  cities: CityData[];
+  currentCity: CityName;
+  cities: readonly CityName[];
   onCityChange: (cityName: string) => void;
   detecting: boolean;
 }
@@ -30,7 +30,7 @@ export default function CitySelector({
 
       <div className="relative">
         <select
-          value={currentCity.name}
+          value={currentCity}
           onChange={(e) => onCityChange(e.target.value)}
           disabled={detecting}
           className="appearance-none minecraft-border px-4 py-2 pr-8 text-foreground text-mc-small minecraft-text cursor-pointer
@@ -38,8 +38,8 @@ export default function CitySelector({
             disabled:opacity-50 min-w-[160px]"
         >
           {cities.map((c) => (
-            <option key={c.name} value={c.name} className="bg-card text-foreground">
-              {c.name}
+            <option key={c} value={c} className="bg-card text-foreground">
+              {c}
             </option>
           ))}
         </select>
