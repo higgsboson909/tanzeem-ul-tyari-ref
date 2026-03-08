@@ -8,6 +8,7 @@ import RamadanCalendar from '@/components/RamadanCalendar';
 import BigCountdownOverlay from '@/components/BigCountdownOverlay';
 import SehriIftarOverlay from '@/components/SehriIftarOverlay';
 import DailyDuaCard from '@/components/DailyDuaCard';
+import MotivationalBubbles from '@/components/MotivationalBubbles';
 import { useState } from 'react';
 
 export default function RamadanPage() {
