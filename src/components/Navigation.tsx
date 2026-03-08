@@ -1,12 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Coffee, Utensils, UserPlus } from 'lucide-react';
+import { Home, Coffee, Utensils, UserPlus, Moon } from 'lucide-react';
+import { isRamadanActive } from '@/lib/ramadanDates';
 
 export default function Navigation() {
   const location = useLocation();
+  const ramadanActive = isRamadanActive();
 
   const navItems = [
-    { to: '/', icon: Home, label: 'HOME' },
+    ...(ramadanActive
+      ? [{ to: '/ramadan', icon: Moon, label: 'RAMADAN' }]
+      : []),
+    { to: ramadanActive ? '/home' : '/', icon: Home, label: 'HOME' },
     { to: '/chai-leader', icon: Coffee, label: 'CHAI' },
     { to: '/qeema-hangout', icon: Utensils, label: 'QEEMA' },
     { to: '/join-us', icon: UserPlus, label: 'JOIN US' },
@@ -17,7 +22,7 @@ export default function Navigation() {
       <div className="max-w-6xl mx-auto px-4 py-3">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 shrink-0">
+          <Link to={ramadanActive ? '/ramadan' : '/'} className="flex items-center gap-3 shrink-0">
             <img
               src="/logo.png"
               alt="Tanzeem-ul-Tyari Logo"
