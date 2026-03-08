@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MapPin, ChevronDown, Locate } from 'lucide-react';
+import { MapPin, ChevronDown } from 'lucide-react';
 import type { CityName } from '@/data/pakistanCities';
 import type { Fiqh } from '@/lib/prayerTimes';
 
