@@ -10,7 +10,6 @@ interface CitySelectorProps {
   currentFiqh: Fiqh;
   onFiqhChange: (fiqh: Fiqh) => void;
   detecting: boolean;
-  onDetectLocation?: () => void;
 }
 
 export default function CitySelector({
