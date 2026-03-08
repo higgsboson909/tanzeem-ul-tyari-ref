@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { CITY_NAMES, DEFAULT_CITY, type CityName } from '@/data/pakistanCities';
+import { CITY_NAMES, DEFAULT_CITY, findNearestCity, type CityName } from '@/data/pakistanCities';
 import {
   getRamadanTimetable,
   getSavedCity,
@@ -16,6 +16,7 @@ export function usePrayerTimes() {
   const [fiqh, setFiqh] = useState<Fiqh>(getSavedFiqh());
   const [timetable, setTimetable] = useState<RamadanTimetable | null>(null);
   const [todayTiming, setTodayTiming] = useState<DayTiming | null>(null);
+  const [detecting, setDetecting] = useState(false);
 
   const loadTimetable = useCallback((cityName: CityName, f: Fiqh) => {
     const tt = getRamadanTimetable(cityName, f);
@@ -23,31 +24,49 @@ export function usePrayerTimes() {
     return tt;
   }, []);
 
-  // Load on mount
+  const applyCity = useCallback((c: CityName, f: Fiqh) => {
+    setCity(c);
+    saveCity(c);
+    loadTimetable(c, f);
+  }, [loadTimetable]);
+
+  // Load on mount — try geolocation if no saved city
   useEffect(() => {
     const savedCityName = getSavedCity();
     const savedFiqh = getSavedFiqh();
+
     if (savedCityName && CITY_NAMES.includes(savedCityName as CityName)) {
       const c = savedCityName as CityName;
       setCity(c);
       setFiqh(savedFiqh);
       loadTimetable(c, savedFiqh);
     } else {
-      setCity(DEFAULT_CITY);
+      // Try geolocation
       loadTimetable(DEFAULT_CITY, savedFiqh);
+      if ('geolocation' in navigator) {
+        setDetecting(true);
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const nearest = findNearestCity(pos.coords.latitude, pos.coords.longitude);
+            applyCity(nearest, savedFiqh);
+            setDetecting(false);
+          },
+          () => {
+            setDetecting(false);
+          },
+          { timeout: 5000 }
+        );
+      }
     }
-  }, [loadTimetable]);
+  }, [loadTimetable, applyCity]);
 
   const changeCity = useCallback(
     (cityName: string) => {
       if (CITY_NAMES.includes(cityName as CityName)) {
-        const c = cityName as CityName;
-        setCity(c);
-        saveCity(c);
-        loadTimetable(c, fiqh);
+        applyCity(cityName as CityName, fiqh);
       }
     },
-    [loadTimetable, fiqh]
+    [applyCity, fiqh]
   );
 
   const changeFiqh = useCallback(
@@ -58,6 +77,20 @@ export function usePrayerTimes() {
     },
     [loadTimetable, city]
   );
+
+  const detectLocation = useCallback(() => {
+    if (!('geolocation' in navigator)) return;
+    setDetecting(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const nearest = findNearestCity(pos.coords.latitude, pos.coords.longitude);
+        applyCity(nearest, fiqh);
+        setDetecting(false);
+      },
+      () => setDetecting(false),
+      { timeout: 5000 }
+    );
+  }, [applyCity, fiqh]);
 
   // Update today's timing
   useEffect(() => {
@@ -76,10 +109,11 @@ export function usePrayerTimes() {
     city,
     fiqh,
     timetable,
-    detecting: false,
+    detecting,
     todayTiming,
     changeCity,
     changeFiqh,
+    detectLocation,
     cities: CITY_NAMES,
   };
 }
