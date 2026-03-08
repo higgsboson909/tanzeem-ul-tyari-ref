@@ -1,29 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ramadanTimings } from '../data/ramadanTimings';
-
-// Parse date string like "19 Feb" or "01 Mar" into a Date for 2026
-function parseRamadanDate(dateStr: string): Date {
-  const months: Record<string, number> = { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3 };
-  const parts = dateStr.trim().split(' ');
-  const day = parseInt(parts[0], 10);
-  const month = months[parts[1]] ?? 1;
-  return new Date(2026, month, day);
-}
-
-function getTodayIndex(): number {
-  const now = new Date();
-  const todayMonth = now.getMonth();
-  for (let i = 0; i < ramadanTimings.length; i++) {
-    const d = parseRamadanDate(ramadanTimings[i].date);
-    if (d.getDate() === now.getDate() && d.getMonth() === todayMonth) {
-      return i;
-    }
-  }
-  return 0;
-}
+import type { DayTiming } from '@/lib/prayerTimes';
 
 export interface RamadanState {
-  todayIndex: number;
   countdown: { type: string; hours: number; minutes: number; seconds: number; totalMinutes: number };
   isSehriActive: boolean;
   isIftarActive: boolean;
@@ -32,8 +10,11 @@ export interface RamadanState {
 
 const ACTIVE_DURATION_MS = 5 * 60 * 1000; // 5 minutes
 
-export function useRamadanState(): RamadanState {
-  const todayIndex = getTodayIndex();
+/**
+ * Provides azaan playback, 5-minute active windows, and countdown
+ * based on city-specific timings from usePrayerTimes.
+ */
+export function useRamadanState(todayTiming: DayTiming | null): RamadanState {
   const [countdown, setCountdown] = useState({ type: '', hours: 0, minutes: 0, seconds: 0, totalMinutes: 0 });
   const [isSehriActive, setIsSehriActive] = useState(false);
   const [isIftarActive, setIsIftarActive] = useState(false);
@@ -41,8 +22,6 @@ export function useRamadanState(): RamadanState {
   const azaanRef = useRef<HTMLAudioElement | null>(null);
   const sehriPlayedRef = useRef(false);
   const iftarPlayedRef = useRef(false);
-  const sehriActiveStartRef = useRef<number | null>(null);
-  const iftarActiveStartRef = useRef<number | null>(null);
 
   const playAzaan = useCallback(() => {
     try {
@@ -59,13 +38,19 @@ export function useRamadanState(): RamadanState {
     }
   }, []);
 
+  // Reset played refs when timing changes (new day or new city)
   useEffect(() => {
+    sehriPlayedRef.current = false;
+    iftarPlayedRef.current = false;
+  }, [todayTiming?.date, todayTiming?.sehri, todayTiming?.iftar]);
+
+  useEffect(() => {
+    if (!todayTiming) return;
+
     const timer = setInterval(() => {
       const now = new Date();
-      const today = ramadanTimings[todayIndex];
-      const [sehrHour, sehrMin] = today.sehr.split(':').map(Number);
-      const [iftarHourRaw, iftarMin] = today.iftar.split(':').map(Number);
-      const iftarHour = iftarHourRaw + 12; // PM
+      const [sehrHour, sehrMin] = todayTiming.sehri.split(':').map(Number);
+      const [iftarHour, iftarMin] = todayTiming.iftar.split(':').map(Number);
 
       const sehrTime = new Date(now);
       sehrTime.setHours(sehrHour, sehrMin, 0, 0);
@@ -80,7 +65,6 @@ export function useRamadanState(): RamadanState {
       if (now >= sehrTime && now <= sehrEndTime) {
         if (!sehriPlayedRef.current) {
           sehriPlayedRef.current = true;
-          sehriActiveStartRef.current = sehrTime.getTime();
           playAzaan();
         }
         setIsSehriActive(true);
@@ -93,7 +77,6 @@ export function useRamadanState(): RamadanState {
       if (now >= iftarTime && now <= iftarEndTime) {
         if (!iftarPlayedRef.current) {
           iftarPlayedRef.current = true;
-          iftarActiveStartRef.current = iftarTime.getTime();
           playAzaan();
         }
         setIsIftarActive(true);
@@ -111,17 +94,14 @@ export function useRamadanState(): RamadanState {
         target = iftarTime;
         type = 'IFTAR';
       } else {
-        // After iftar, count down to next day's sehri
-        const nextIdx = Math.min(todayIndex + 1, ramadanTimings.length - 1);
-        const nextDay = ramadanTimings[nextIdx];
-        const [nextSehrHour, nextSehrMin] = nextDay.sehr.split(':').map(Number);
+        // After iftar, count down to next day's sehri (approximate same time)
         target = new Date(now);
         target.setDate(target.getDate() + 1);
-        target.setHours(nextSehrHour, nextSehrMin, 0, 0);
+        target.setHours(sehrHour, sehrMin, 0, 0);
         type = 'SEHRI';
       }
 
-      const diff = target.getTime() - now.getTime();
+      const diff = Math.max(0, target.getTime() - now.getTime());
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -130,7 +110,7 @@ export function useRamadanState(): RamadanState {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [todayIndex, playAzaan]);
+  }, [todayTiming, playAzaan]);
 
-  return { todayIndex, countdown, isSehriActive, isIftarActive, activeMinutesElapsed };
+  return { countdown, isSehriActive, isIftarActive, activeMinutesElapsed };
 }
