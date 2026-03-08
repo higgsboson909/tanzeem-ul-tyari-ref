@@ -12,10 +12,12 @@ import { useState } from 'react';
 export default function HomePage() {
   const {
     city,
+    fiqh,
     timetable,
     detecting,
     todayTiming,
     changeCity,
+    changeFiqh,
     cities,
   } = usePrayerTimes();
 
