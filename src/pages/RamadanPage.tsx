@@ -75,22 +75,6 @@ export default function RamadanPage() {
       {/* Full Calendar */}
       <RamadanCalendar timetable={timetable} />
 
-      {/* Motivational section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="islamic-border p-6 text-center"
-      >
-        <p className="islamic-text text-lg md:text-xl text-accent mb-2">﷽</p>
-        <p className="islamic-text text-sm md:text-base text-foreground">
-          "O you who believe, fasting is prescribed for you as it was prescribed
-          for those before you, that you may become righteous."
-        </p>
-        <p className="minecraft-text text-mc-pixel text-muted-foreground mt-3">
-          — Surah Al-Baqarah 2:183
-        </p>
-      </motion.div>
     </div>
   );
 }

@@ -45,22 +45,6 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-
-      {/* Motivational section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="islamic-border p-6 text-center"
-      >
-        <p className="islamic-text text-lg md:text-xl text-accent mb-2">﷽</p>
-        <p className="islamic-text text-sm md:text-base text-foreground">
-          "Indeed, with hardship comes ease."
-        </p>
-        <p className="minecraft-text text-mc-pixel text-muted-foreground mt-3">
-          — Surah Ash-Sharh 94:6
-        </p>
-      </motion.div>
     </div>
   );
 }
