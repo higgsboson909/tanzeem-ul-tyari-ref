@@ -15,11 +15,7 @@ export function usePrayerTimes() {
   const [city, setCity] = useState<CityData>(DEFAULT_CITY);
   const [timetable, setTimetable] = useState<RamadanTimetable | null>(null);
   const [detecting, setDetecting] = useState(true);
-  const [countdownType, setCountdownType] = useState<'SEHRI' | 'IFTAR'>('SEHRI');
-  const [secondsLeft, setSecondsLeft] = useState(0);
   const [todayTiming, setTodayTiming] = useState<DayTiming | null>(null);
-  const [showOverlay, setShowOverlay] = useState<'sehri' | 'iftar' | null>(null);
-  const [overlayDismissed, setOverlayDismissed] = useState<string | null>(null);
 
   // Load or generate timetable for a city
   const loadTimetable = useCallback((cityData: CityData) => {
