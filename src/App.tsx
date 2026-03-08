@@ -9,6 +9,7 @@ import RamadanPage from "./pages/RamadanPage";
 import ChaiLeaderPage from "./pages/ChaiLeaderPage";
 
 import JoinUsPage from "./pages/JoinUsPage";
+import EidPosterPage from "./pages/EidPosterPage";
 import NotFound from "./pages/NotFound";
 import { isRamadanActive } from "./lib/ramadanDates";
 
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/chai-leader" element={<ChaiLeaderPage />} />
             
             <Route path="/join-us" element={<JoinUsPage />} />
+            <Route path="/eid-poster-generator" element={<EidPosterPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
 
