@@ -47,6 +47,10 @@ export default function HomePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      {/* Big 10-second countdown overlay */}
+      <BigCountdownOverlay seconds={secondsLeft} type={countdownType} />
+
+      {/* Celebration Overlay */}
       {showOverlay &&
         <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
       }
