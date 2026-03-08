@@ -31,7 +31,7 @@ export default function JoinUsPage() {
         <h1 className="minecraft-text text-sm md:text-lg gradient-text mb-2">
           🤝 JOIN THE TANZEEM
         </h1>
-        <p className="minecraft-text text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground">
           BECOME PART OF THE PANIC SQUAD
         </p>
       </motion.div>
