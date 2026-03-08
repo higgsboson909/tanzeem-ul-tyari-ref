@@ -9,6 +9,7 @@ import RamadanPage from "./pages/RamadanPage";
 import ChaiLeaderPage from "./pages/ChaiLeaderPage";
 
 import JoinUsPage from "./pages/JoinUsPage";
+import EidPosterPage from "./pages/EidPosterPage";
 import NotFound from "./pages/NotFound";
 import { isRamadanActive } from "./lib/ramadanDates";
 
