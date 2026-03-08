@@ -4,6 +4,7 @@ import CitySelector from '@/components/CitySelector';
 import CountdownTimer from '@/components/CountdownTimer';
 import TodayTimingsCard from '@/components/TodayTimingsCard';
 import RamadanCalendar from '@/components/RamadanCalendar';
+import SehriIftarOverlay from '@/components/SehriIftarOverlay';
 
 export default function HomePage() {
   const {
@@ -15,10 +16,17 @@ export default function HomePage() {
     todayTiming,
     changeCity,
     cities,
+    showOverlay,
+    dismissOverlay,
   } = usePrayerTimes();
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      {/* Celebration Overlay */}
+      {showOverlay && (
+        <SehriIftarOverlay type={showOverlay} onDismiss={dismissOverlay} />
+      )}
+
       {/* Hero */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
