@@ -1,12 +1,11 @@
-import { Coordinates, PrayerTimes, CalculationMethod } from 'adhan';
-import type { CityData } from '@/data/pakistanCities';
+import ramadanData from '@/data/ramadanTimings.json';
+import { cityToKey, type CityName } from '@/data/pakistanCities';
 
 export interface DayTiming {
-  date: string; // YYYY-MM-DD
-  sehri: string; // HH:mm
-  iftar: string; // HH:mm
-  sehriDate: Date;
-  iftarDate: Date;
+  day: number;
+  date: string;   // YYYY-MM-DD
+  sehri: string;  // HH:mm (24h)
+  iftar: string;  // HH:mm (24h)
 }
 
 export interface RamadanTimetable {
@@ -14,179 +13,55 @@ export interface RamadanTimetable {
   timings: DayTiming[];
 }
 
-// Ramadan 2026: Feb 19 – Mar 20 (30 days)
-const RAMADAN_START = new Date(2026, 1, 19); // Feb 19
-const RAMADAN_END = new Date(2026, 2, 20); // Mar 20
-
-function formatTime(date: Date): string {
-  const h = date.getHours().toString().padStart(2, '0');
-  const m = date.getMinutes().toString().padStart(2, '0');
-  return `${h}:${m}`;
-}
-
-function formatDate(date: Date): string {
-  const y = date.getFullYear();
-  const m = (date.getMonth() + 1).toString().padStart(2, '0');
-  const d = date.getDate().toString().padStart(2, '0');
-  return `${y}-${m}-${d}`;
+/**
+ * Parse "05:18 AM" or "6:29 PM" → "05:18" or "18:29" (24h HH:mm)
+ */
+function parseAmPm(timeStr: string): string {
+  const cleaned = timeStr.trim().toUpperCase();
+  const match = cleaned.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
+  if (!match) return '00:00';
+  let h = parseInt(match[1], 10);
+  const m = parseInt(match[2], 10);
+  const period = match[3];
+  if (period === 'AM' && h === 12) h = 0;
+  if (period === 'PM' && h !== 12) h += 12;
+  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
 }
 
 /**
- * Generate Ramadan timetable for a city using adhan-js
- * Uses Karachi method (Fajr 18°, Isha 18°) — standard for Pakistan
- * Sehri = Fajr - 1 minute (precaution)
- * Iftar = Maghrib (sunset)
+ * Parse date strings like "19 Feb 2026" or "19 February 2026" → "2026-02-19"
  */
-export function generateRamadanTimetable(city: CityData): RamadanTimetable {
-  const coords = new Coordinates(city.lat, city.lng);
-  const params = CalculationMethod.Karachi();
-
-  const timings: DayTiming[] = [];
-  const current = new Date(RAMADAN_START);
-
-  while (current <= RAMADAN_END) {
-    const pt = new PrayerTimes(coords, current, params);
-
-    // Sehri = Fajr - 1 minute
-    const sehriDate = new Date(pt.fajr.getTime() - 60 * 1000);
-    const iftarDate = new Date(pt.maghrib);
-
-    timings.push({
-      date: formatDate(current),
-      sehri: formatTime(sehriDate),
-      iftar: formatTime(iftarDate),
-      sehriDate,
-      iftarDate,
-    });
-
-    current.setDate(current.getDate() + 1);
-  }
-
-  return { city: city.name, timings };
+function parseDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return '';
+  const y = d.getFullYear();
+  const m = (d.getMonth() + 1).toString().padStart(2, '0');
+  const day = d.getDate().toString().padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 /**
- * Get today's timing from a timetable, or the closest date
+ * Get the Ramadan timetable for a city from hardcoded JSON (hanafi)
  */
-export function getTodayTiming(timetable: RamadanTimetable): DayTiming | null {
-  const today = formatDate(new Date());
-  return timetable.timings.find((t) => t.date === today) || null;
+export function getRamadanTimetable(city: CityName): RamadanTimetable {
+  const key = cityToKey(city);
+  const cityData = (ramadanData.cities as Record<string, { hanafi: Array<{ day: number; sehri: string; iftar: string; date: string }> }>)[key];
+
+  if (!cityData) {
+    return { city, timings: [] };
+  }
+
+  const timings: DayTiming[] = cityData.hanafi.map((entry) => ({
+    day: entry.day,
+    date: parseDate(entry.date),
+    sehri: parseAmPm(entry.sehri),
+    iftar: parseAmPm(entry.iftar),
+  }));
+
+  return { city, timings };
 }
 
-/**
- * Get next Sehri and Iftar times relative to now
- */
-export function getNextTimings(timetable: RamadanTimetable): {
-  nextSehri: DayTiming | null;
-  nextIftar: DayTiming | null;
-  countdownType: 'SEHRI' | 'IFTAR';
-  secondsLeft: number;
-} {
-  const now = new Date();
-
-  // Find today's and tomorrow's timings
-  const todayStr = formatDate(now);
-  const tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const tomorrowStr = formatDate(tomorrow);
-
-  const todayTiming = timetable.timings.find((t) => t.date === todayStr);
-  const tomorrowTiming = timetable.timings.find((t) => t.date === tomorrowStr);
-
-  if (!todayTiming) {
-    // Not in Ramadan range — find closest
-    const first = timetable.timings[0];
-    if (first) {
-      const firstSehri = buildDateFromTiming(first.date, first.sehri);
-      const diff = Math.floor((firstSehri.getTime() - now.getTime()) / 1000);
-      return {
-        nextSehri: first,
-        nextIftar: first,
-        countdownType: 'SEHRI',
-        secondsLeft: Math.max(0, diff),
-      };
-    }
-    return { nextSehri: null, nextIftar: null, countdownType: 'SEHRI', secondsLeft: 0 };
-  }
-
-  const todaySehri = buildDateFromTiming(todayTiming.date, todayTiming.sehri);
-  const todayIftar = buildDateFromTiming(todayTiming.date, todayTiming.iftar);
-
-  // Before Sehri → countdown to Sehri
-  if (now < todaySehri) {
-    const diff = Math.floor((todaySehri.getTime() - now.getTime()) / 1000);
-    return {
-      nextSehri: todayTiming,
-      nextIftar: todayTiming,
-      countdownType: 'SEHRI',
-      secondsLeft: diff,
-    };
-  }
-
-  // Between Sehri and Iftar → countdown to Iftar
-  if (now < todayIftar) {
-    const diff = Math.floor((todayIftar.getTime() - now.getTime()) / 1000);
-    return {
-      nextSehri: tomorrowTiming || null,
-      nextIftar: todayTiming,
-      countdownType: 'IFTAR',
-      secondsLeft: diff,
-    };
-  }
-
-  // After Iftar → countdown to tomorrow's Sehri
-  if (tomorrowTiming) {
-    const tomorrowSehri = buildDateFromTiming(tomorrowTiming.date, tomorrowTiming.sehri);
-    const diff = Math.floor((tomorrowSehri.getTime() - now.getTime()) / 1000);
-    return {
-      nextSehri: tomorrowTiming,
-      nextIftar: tomorrowTiming,
-      countdownType: 'SEHRI',
-      secondsLeft: diff,
-    };
-  }
-
-  return { nextSehri: null, nextIftar: null, countdownType: 'SEHRI', secondsLeft: 0 };
-}
-
-function buildDateFromTiming(dateStr: string, timeStr: string): Date {
-  const [year, month, day] = dateStr.split('-').map(Number);
-  const [hours, minutes] = timeStr.split(':').map(Number);
-  return new Date(year, month - 1, day, hours, minutes, 0);
-}
-
-// Cache key
-const CACHE_KEY = 'tanzeem_prayer_cache';
 const CITY_PREF_KEY = 'tanzeem_selected_city';
-
-export function getCachedTimetable(cityName: string): RamadanTimetable | null {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const data = JSON.parse(raw);
-    if (data.city === cityName) return data;
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-export function cacheTimetable(timetable: RamadanTimetable) {
-  try {
-    // Store without Date objects (they don't serialize)
-    const toCache = {
-      city: timetable.city,
-      timings: timetable.timings.map((t) => ({
-        date: t.date,
-        sehri: t.sehri,
-        iftar: t.iftar,
-      })),
-    };
-    localStorage.setItem(CACHE_KEY, JSON.stringify(toCache));
-  } catch {
-    // ignore
-  }
-}
 
 export function getSavedCity(): string | null {
   return localStorage.getItem(CITY_PREF_KEY);
