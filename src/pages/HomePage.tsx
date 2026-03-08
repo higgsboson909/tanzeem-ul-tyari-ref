@@ -83,7 +83,7 @@ export default function HomePage() {
       <CountdownTimer secondsLeft={secondsLeft} countdownType={countdownType} />
 
       {/* Today's Timings */}
-      <TodayTimingsCard timing={todayTiming} cityName={city.name} />
+      <TodayTimingsCard timing={todayTiming} cityName={city} />
 
       {/* Full Calendar */}
       <RamadanCalendar timetable={timetable} />
