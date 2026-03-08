@@ -36,6 +36,15 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
       transition={{ delay: 0.2 }}
       className="minecraft-border p-6 md:p-8"
     >
+      {/* Roza number badge */}
+      <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="minecraft-border px-4 py-2 bg-primary/10">
+          <span className="minecraft-text text-sm md:text-base text-accent">
+            ROZA #{timing.day}
+          </span>
+        </div>
+      </div>
+
       <div className="minecraft-text text-mc-small text-muted-foreground text-center mb-6">
         📅 TODAY&apos;S TIMINGS — {cityName.toUpperCase()}
       </div>
