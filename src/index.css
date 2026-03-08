@@ -73,15 +73,19 @@
     min-height: 100vh;
     image-rendering: pixelated;
     overflow-x: hidden;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--mc-darker)) 0%,
-      hsl(var(--mc-dark-bg)) 50%,
-      hsl(var(--mc-dark-green)) 100%
-    );
+    background:
+      radial-gradient(ellipse at 20% 0%, hsla(var(--mc-green), 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, hsla(var(--gold), 0.08) 0%, transparent 50%),
+      linear-gradient(
+        160deg,
+        hsl(var(--mc-darker)) 0%,
+        hsl(var(--mc-dark-bg)) 35%,
+        hsla(var(--mc-dark-green), 0.8) 100%
+      );
     background-attachment: fixed;
   }
 
+  /* Scanline overlay */
   body::before {
     content: '';
     position: fixed;
@@ -93,15 +97,34 @@
       repeating-linear-gradient(0deg,
         transparent,
         transparent 2px,
-        hsla(var(--mc-green), 0.02) 2px,
-        hsla(var(--mc-green), 0.02) 4px),
+        hsla(var(--mc-green), 0.04) 2px,
+        hsla(var(--mc-green), 0.04) 4px),
       repeating-linear-gradient(90deg,
         transparent,
         transparent 2px,
-        hsla(var(--mc-green), 0.02) 2px,
-        hsla(var(--mc-green), 0.02) 4px);
+        hsla(var(--mc-green), 0.04) 2px,
+        hsla(var(--mc-green), 0.04) 4px);
     pointer-events: none;
     z-index: 1;
+  }
+
+  /* CRT flicker */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      hsla(0, 0%, 0%, 0.03) 0px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    z-index: 1;
+    animation: crt-flicker 0.15s infinite alternate;
   }
 
   #root {
@@ -158,6 +181,67 @@
       transparent 100%
     );
     opacity: 0.6;
+  }
+
+  /* Gold corner bracket card — like the old site's countdown */
+  .gold-bracket-card {
+    border: 3px solid hsl(var(--gold));
+    position: relative;
+    background: linear-gradient(
+      145deg,
+      hsla(var(--mc-dark-bg), 0.9) 0%,
+      hsla(var(--mc-dark-green), 0.25) 50%,
+      hsla(var(--gold), 0.05) 100%
+    );
+    box-shadow:
+      inset 0 0 40px hsla(var(--gold), 0.08),
+      0 0 50px hsla(var(--gold), 0.15),
+      0 8px 32px hsla(0, 0%, 0%, 0.6);
+  }
+
+  /* Corner brackets */
+  .gold-bracket-card::before,
+  .gold-bracket-card::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: hsl(var(--gold-light));
+    border-style: solid;
+    z-index: 5;
+    filter: drop-shadow(0 0 4px hsla(var(--gold), 0.6));
+  }
+  .gold-bracket-card::before {
+    top: 8px;
+    left: 8px;
+    border-width: 3px 0 0 3px;
+  }
+  .gold-bracket-card::after {
+    top: 8px;
+    right: 8px;
+    border-width: 3px 3px 0 0;
+  }
+
+  .corner-brackets-bottom::before,
+  .corner-brackets-bottom::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-color: hsl(var(--gold-light));
+    border-style: solid;
+    z-index: 5;
+    filter: drop-shadow(0 0 4px hsla(var(--gold), 0.6));
+  }
+  .corner-brackets-bottom::before {
+    bottom: 8px;
+    left: 8px;
+    border-width: 0 0 3px 3px;
+  }
+  .corner-brackets-bottom::after {
+    bottom: 8px;
+    right: 8px;
+    border-width: 0 3px 3px 0;
   }
 
   /* Minecraft Button */
@@ -298,6 +382,15 @@
     animation: gradient-shift 4s ease infinite;
   }
 
+  /* Chaotic glow text */
+  .chaos-text {
+    text-shadow:
+      0 0 10px hsla(var(--gold), 0.6),
+      0 0 20px hsla(var(--gold), 0.3),
+      3px 3px 0px hsla(var(--mc-dark-green), 0.8),
+      6px 6px 0px hsla(0, 0%, 0%, 0.5);
+  }
+
   /* Card hover */
   .card-hover {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -322,7 +415,7 @@
     animation: shine 3s infinite;
   }
 
-  /* Countdown digit */
+  /* Countdown digit — boxed style like old site */
   .countdown-digit {
     font-size: clamp(2rem, 6vw, 4rem);
     font-weight: bold;
@@ -333,12 +426,33 @@
     filter: drop-shadow(0 4px 8px hsla(0, 0%, 0%, 0.5));
   }
 
+  .countdown-box {
+    border: 3px solid hsl(var(--mc-dark-green));
+    background: linear-gradient(
+      180deg,
+      hsla(var(--mc-dark-bg), 0.95) 0%,
+      hsla(var(--mc-darker), 0.98) 100%
+    );
+    box-shadow:
+      inset 2px 2px 0px hsla(var(--mc-light-green), 0.2),
+      inset -2px -2px 0px hsla(var(--mc-dark-green), 0.4),
+      4px 4px 0px hsla(0, 0%, 0%, 0.5),
+      0 0 15px hsla(var(--mc-green), 0.2);
+    padding: 12px 16px;
+    min-width: 80px;
+  }
+
   /* Glass effect */
   .glass {
     background: hsla(var(--mc-dark-bg), 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 2px solid hsla(var(--mc-green), 0.3);
+  }
+
+  /* Glitch text effect */
+  .glitch-hover:hover {
+    animation: glitch-text 0.3s ease;
   }
 }
 
@@ -363,10 +477,34 @@
     50% { box-shadow: 0 0 40px hsla(var(--mc-green), 0.8), 0 0 60px hsla(var(--mc-light-green), 0.6); }
   }
 
+  @keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 0 20px hsla(var(--gold), 0.2), inset 0 0 20px hsla(var(--gold), 0.05); }
+    50% { box-shadow: 0 0 40px hsla(var(--gold), 0.4), 0 0 80px hsla(var(--gold), 0.2), inset 0 0 30px hsla(var(--gold), 0.1); }
+  }
+
   @keyframes shimmer {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+
+  @keyframes crt-flicker {
+    0% { opacity: 0.97; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes glitch-text {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+    100% { transform: translate(0); }
+  }
+
+  @keyframes border-pulse {
+    0%, 100% { border-color: hsl(var(--gold)); }
+    50% { border-color: hsl(var(--gold-light)); }
   }
 
   .animate-float {
@@ -375,6 +513,14 @@
 
   .animate-pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-gold {
+    animation: pulse-gold 3s ease-in-out infinite;
+  }
+
+  .animate-border-pulse {
+    animation: border-pulse 2s ease-in-out infinite;
   }
 }
 
@@ -418,5 +564,19 @@ html, body {
   }
   .islamic-border {
     border-width: 2px;
+  }
+  .gold-bracket-card {
+    border-width: 2px;
+  }
+  .gold-bracket-card::before,
+  .gold-bracket-card::after,
+  .corner-brackets-bottom::before,
+  .corner-brackets-bottom::after {
+    width: 20px;
+    height: 20px;
+  }
+  .countdown-box {
+    min-width: 60px;
+    padding: 8px 10px;
   }
 }

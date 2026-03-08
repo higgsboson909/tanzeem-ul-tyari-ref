@@ -34,12 +34,15 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="minecraft-border p-6 md:p-8"
+      className="islamic-border p-6 md:p-8 relative overflow-hidden"
     >
+      {/* Decorative moon */}
+      <Moon className="absolute top-3 right-3 w-6 h-6 text-accent opacity-20" />
+
       {/* Roza number badge */}
       <div className="flex items-center justify-center gap-3 mb-4">
-        <div className="minecraft-border px-4 py-2 bg-primary/10">
-          <span className="minecraft-text text-sm md:text-base text-accent">
+        <div className="minecraft-border px-5 py-2.5 bg-primary/10 animate-pulse-glow">
+          <span className="minecraft-text text-sm md:text-base text-accent chaos-text">
             ROZA #{timing.day}
           </span>
         </div>
@@ -52,7 +55,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
       <div className="grid grid-cols-2 gap-4 md:gap-8">
         {/* Sehri */}
         <motion.div
-          className="islamic-border p-4 md:p-6 text-center card-hover"
+          className="countdown-box text-center card-hover"
           whileHover={{ scale: 1.03 }}
         >
           <Moon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-3 text-accent" />
@@ -64,7 +67,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
 
         {/* Iftar */}
         <motion.div
-          className="islamic-border p-4 md:p-6 text-center card-hover"
+          className="countdown-box text-center card-hover"
           whileHover={{ scale: 1.03 }}
         >
           <Sun className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-3 text-accent" />
