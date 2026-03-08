@@ -47,8 +47,8 @@ export default function ChaiLeaderPage() {
               )}
             </div>
             <div className="flex-1">
-              <div className="minecraft-text text-[10px] text-foreground">{leader.name}</div>
-              <div className="minecraft-text text-[8px] text-muted-foreground">{leader.title}</div>
+              <div className="minecraft-text text-mc-small text-foreground">{leader.name}</div>
+              <div className="minecraft-text text-mc-pixel text-muted-foreground">{leader.title}</div>
             </div>
             <div className="flex items-center gap-1">
               <Star className="w-3 h-3 text-accent" />
