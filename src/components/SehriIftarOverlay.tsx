@@ -130,7 +130,7 @@ export default function SehriIftarOverlay({ type, onDismiss }: SehriIftarOverlay
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="minecraft-text text-[10px] md:text-xs text-muted-foreground"
+                className="minecraft-text text-mc-small md:text-xs text-muted-foreground"
               >
                 {messages[currentMsgIdx]}
               </motion.p>
@@ -142,7 +142,7 @@ export default function SehriIftarOverlay({ type, onDismiss }: SehriIftarOverlay
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onDismiss}
-            className="minecraft-button text-[10px] md:text-xs"
+            className="minecraft-button text-mc-small md:text-xs"
           >
             ✕ DISMISS
           </motion.button>

@@ -20,7 +20,7 @@ export default function QeemaHangoutPage() {
         <h1 className="minecraft-text text-sm md:text-lg gradient-text mb-2">
           🍖 QEEMA HANGOUT SPOTS
         </h1>
-        <p className="minecraft-text text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground">
           BEST POST-EXAM QEEMA DESTINATIONS
         </p>
       </motion.div>
@@ -34,14 +34,14 @@ export default function QeemaHangoutPage() {
             transition={{ delay: i * 0.1 }}
             className="minecraft-border p-5 card-hover"
           >
-            <div className="minecraft-text text-[10px] text-foreground mb-2">{spot.place}</div>
+            <div className="minecraft-text text-mc-small text-foreground mb-2">{spot.place}</div>
             <div className="flex items-center gap-2 mb-1">
               <MapPin className="w-3 h-3 text-accent" />
-              <span className="minecraft-text text-[8px] text-muted-foreground">{spot.location}</span>
+              <span className="minecraft-text text-mc-pixel text-muted-foreground">{spot.location}</span>
             </div>
             <div className="flex items-center gap-2 mb-2">
               <Clock className="w-3 h-3 text-primary" />
-              <span className="minecraft-text text-[8px] text-muted-foreground">{spot.specialty}</span>
+              <span className="minecraft-text text-mc-pixel text-muted-foreground">{spot.specialty}</span>
             </div>
             <div className="text-sm">{spot.rating}</div>
           </motion.div>

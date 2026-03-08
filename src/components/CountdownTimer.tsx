@@ -21,7 +21,7 @@ export default function CountdownTimer({ secondsLeft, countdownType }: Countdown
       animate={{ opacity: 1, scale: 1 }}
       className="minecraft-border p-6 md:p-8 text-center"
     >
-      <div className="minecraft-text text-[10px] md:text-xs text-muted-foreground mb-4">
+      <div className="minecraft-text text-mc-small md:text-xs text-muted-foreground mb-4">
         {label}
       </div>
 
@@ -56,7 +56,7 @@ function TimeUnit({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center">
       <span className="countdown-digit">{value}</span>
-      <span className="minecraft-text text-[8px] text-muted-foreground mt-1">{label}</span>
+      <span className="minecraft-text text-mc-pixel text-muted-foreground mt-1">{label}</span>
     </div>
   );
 }

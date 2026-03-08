@@ -23,7 +23,7 @@ export default function Navigation() {
               alt="Tanzeem-ul-Tyari Logo"
               className="w-10 h-10 md:w-12 md:h-12 logo-glow rounded"
             />
-            <span className="minecraft-text text-[8px] md:text-[10px] gradient-text hidden sm:block">
+            <span className="minecraft-text text-mc-pixel md:text-mc-small gradient-text hidden sm:block">
               TANZEEM-UL-TYARI
             </span>
           </Link>
@@ -38,7 +38,7 @@ export default function Navigation() {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`nav-link flex items-center gap-1 md:gap-2 text-[8px] md:text-[10px] ${
+                  className={`nav-link flex items-center gap-1 md:gap-2 text-mc-pixel md:text-mc-small ${
                     isActive ? '!border-accent !bg-primary/30' : ''
                   }`}
                 >
@@ -55,7 +55,7 @@ export default function Navigation() {
           <motion.div
             animate={{ x: ['100%', '-100%'] }}
             transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            className="whitespace-nowrap minecraft-text text-[8px] text-accent"
+            className="whitespace-nowrap minecraft-text text-mc-pixel text-accent"
           >
             🌙 UNITED BY PANIC 🌙 Welcome to the Tanzeem-ul-Tyari Portal 🌙 Est.
             5th Semester Finals 🌙

@@ -22,7 +22,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
         animate={{ opacity: 1 }}
         className="minecraft-border p-6 text-center"
       >
-        <p className="minecraft-text text-[10px] text-muted-foreground">
+        <p className="minecraft-text text-mc-small text-muted-foreground">
           ⏳ Ramadan 2026 starts Feb 19
         </p>
       </motion.div>
@@ -36,7 +36,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
       transition={{ delay: 0.2 }}
       className="minecraft-border p-6 md:p-8"
     >
-      <div className="minecraft-text text-[10px] text-muted-foreground text-center mb-6">
+      <div className="minecraft-text text-mc-small text-muted-foreground text-center mb-6">
         📅 TODAY&apos;S TIMINGS — {cityName.toUpperCase()}
       </div>
 
@@ -47,7 +47,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
           whileHover={{ scale: 1.03 }}
         >
           <Moon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-3 text-accent" />
-          <div className="minecraft-text text-[9px] text-muted-foreground mb-2">SEHRI ENDS</div>
+          <div className="minecraft-text text-mc-pixel-md text-muted-foreground mb-2">SEHRI ENDS</div>
           <div className="gradient-text minecraft-text text-sm md:text-lg">
             {formatTimeAMPM(timing.sehri)}
           </div>
@@ -59,7 +59,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
           whileHover={{ scale: 1.03 }}
         >
           <Sun className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-3 text-accent" />
-          <div className="minecraft-text text-[9px] text-muted-foreground mb-2">IFTAR TIME</div>
+          <div className="minecraft-text text-mc-pixel-md text-muted-foreground mb-2">IFTAR TIME</div>
           <div className="gradient-text minecraft-text text-sm md:text-lg">
             {formatTimeAMPM(timing.iftar)}
           </div>

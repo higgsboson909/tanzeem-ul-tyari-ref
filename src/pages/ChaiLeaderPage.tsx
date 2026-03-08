@@ -21,7 +21,7 @@ export default function ChaiLeaderPage() {
         <h1 className="minecraft-text text-sm md:text-lg gradient-text mb-2">
           ☕ CHAI LEADERBOARD
         </h1>
-        <p className="minecraft-text text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground">
           WHO DRINKS THE MOST CHAI DURING STUDY SESSIONS?
         </p>
       </motion.div>
@@ -47,13 +47,13 @@ export default function ChaiLeaderPage() {
               )}
             </div>
             <div className="flex-1">
-              <div className="minecraft-text text-[10px] text-foreground">{leader.name}</div>
-              <div className="minecraft-text text-[8px] text-muted-foreground">{leader.title}</div>
+              <div className="minecraft-text text-mc-small text-foreground">{leader.name}</div>
+              <div className="minecraft-text text-mc-pixel text-muted-foreground">{leader.title}</div>
             </div>
             <div className="flex items-center gap-1">
               <Star className="w-3 h-3 text-accent" />
               <span className="minecraft-text text-xs text-accent">{leader.cups}</span>
-              <span className="minecraft-text text-[8px] text-muted-foreground">cups</span>
+              <span className="minecraft-text text-mc-pixel text-muted-foreground">cups</span>
             </div>
           </motion.div>
         ))}

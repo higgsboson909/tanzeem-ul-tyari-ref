@@ -31,7 +31,7 @@ export default function JoinUsPage() {
         <h1 className="minecraft-text text-sm md:text-lg gradient-text mb-2">
           🤝 JOIN THE TANZEEM
         </h1>
-        <p className="minecraft-text text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground">
           BECOME PART OF THE PANIC SQUAD
         </p>
       </motion.div>
@@ -48,8 +48,8 @@ export default function JoinUsPage() {
               className="minecraft-border p-6 text-center card-hover"
             >
               <Icon className="w-8 h-8 mx-auto mb-4 text-accent" />
-              <div className="minecraft-text text-[10px] text-foreground mb-2">{feat.title}</div>
-              <div className="minecraft-text text-[8px] text-muted-foreground">{feat.desc}</div>
+              <div className="minecraft-text text-mc-small text-foreground mb-2">{feat.title}</div>
+              <div className="minecraft-text text-mc-pixel text-muted-foreground">{feat.desc}</div>
             </motion.div>
           );
         })}
@@ -64,14 +64,14 @@ export default function JoinUsPage() {
         <p className="islamic-text text-lg text-accent mb-4">
           "We survived, somehow."
         </p>
-        <p className="minecraft-text text-[8px] text-muted-foreground mb-6">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground mb-6">
           — Every 5th Semester Student Ever
         </p>
         <a
           href="https://chat.whatsapp.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="minecraft-button inline-block text-[10px]"
+          className="minecraft-button inline-block text-mc-small"
         >
           JOIN WHATSAPP GROUP
         </a>
