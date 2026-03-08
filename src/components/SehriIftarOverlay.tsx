@@ -142,7 +142,7 @@ export default function SehriIftarOverlay({ type, onDismiss }: SehriIftarOverlay
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onDismiss}
-            className="minecraft-button text-[10px] md:text-xs"
+            className="minecraft-button text-mc-small md:text-xs"
           >
             ✕ DISMISS
           </motion.button>

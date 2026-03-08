@@ -80,7 +80,7 @@ export default function HomePage() {
         <p className="islamic-text text-sm md:text-base text-foreground">
           "O you who believe, fasting is prescribed for you as it was prescribed for those before you, that you may become righteous."
         </p>
-        <p className="minecraft-text text-[8px] text-muted-foreground mt-3">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground mt-3">
           — Surah Al-Baqarah 2:183
         </p>
       </motion.div>

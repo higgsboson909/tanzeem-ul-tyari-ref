@@ -59,7 +59,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
           whileHover={{ scale: 1.03 }}
         >
           <Sun className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-3 text-accent" />
-          <div className="minecraft-text text-[9px] text-muted-foreground mb-2">IFTAR TIME</div>
+          <div className="minecraft-text text-mc-pixel-md text-muted-foreground mb-2">IFTAR TIME</div>
           <div className="gradient-text minecraft-text text-sm md:text-lg">
             {formatTimeAMPM(timing.iftar)}
           </div>

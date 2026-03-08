@@ -33,7 +33,7 @@ export default function CitySelector({
           value={currentCity.name}
           onChange={(e) => onCityChange(e.target.value)}
           disabled={detecting}
-          className="appearance-none minecraft-border px-4 py-2 pr-8 text-foreground text-[10px] minecraft-text cursor-pointer
+          className="appearance-none minecraft-border px-4 py-2 pr-8 text-foreground text-mc-small minecraft-text cursor-pointer
             bg-card border-border focus:outline-none focus:border-primary
             disabled:opacity-50 min-w-[160px]"
         >

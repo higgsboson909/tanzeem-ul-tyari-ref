@@ -56,7 +56,7 @@ function TimeUnit({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center">
       <span className="countdown-digit">{value}</span>
-      <span className="minecraft-text text-[8px] text-muted-foreground mt-1">{label}</span>
+      <span className="minecraft-text text-mc-pixel text-muted-foreground mt-1">{label}</span>
     </div>
   );
 }

@@ -13,6 +13,13 @@ export default {
       },
     },
     extend: {
+      fontSize: {
+        "mc-micro": "6px",    // council persona, smallest text
+        "mc-tiny": "7px",     // council titles, footer subtitle
+        "mc-pixel": "8px",    // labels, captions, table cells, nav ticker
+        "mc-pixel-md": "9px", // today timings labels
+        "mc-small": "10px",   // nav links, selectors, primary labels
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

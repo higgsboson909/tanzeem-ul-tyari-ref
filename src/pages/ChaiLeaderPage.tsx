@@ -53,7 +53,7 @@ export default function ChaiLeaderPage() {
             <div className="flex items-center gap-1">
               <Star className="w-3 h-3 text-accent" />
               <span className="minecraft-text text-xs text-accent">{leader.cups}</span>
-              <span className="minecraft-text text-[8px] text-muted-foreground">cups</span>
+              <span className="minecraft-text text-mc-pixel text-muted-foreground">cups</span>
             </div>
           </motion.div>
         ))}

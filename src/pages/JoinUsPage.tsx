@@ -64,14 +64,14 @@ export default function JoinUsPage() {
         <p className="islamic-text text-lg text-accent mb-4">
           "We survived, somehow."
         </p>
-        <p className="minecraft-text text-[8px] text-muted-foreground mb-6">
+        <p className="minecraft-text text-mc-pixel text-muted-foreground mb-6">
           — Every 5th Semester Student Ever
         </p>
         <a
           href="https://chat.whatsapp.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="minecraft-button inline-block text-[10px]"
+          className="minecraft-button inline-block text-mc-small"
         >
           JOIN WHATSAPP GROUP
         </a>

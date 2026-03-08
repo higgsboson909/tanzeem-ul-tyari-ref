@@ -55,7 +55,7 @@ export default function Navigation() {
           <motion.div
             animate={{ x: ['100%', '-100%'] }}
             transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            className="whitespace-nowrap minecraft-text text-[8px] text-accent"
+            className="whitespace-nowrap minecraft-text text-mc-pixel text-accent"
           >
             🌙 UNITED BY PANIC 🌙 Welcome to the Tanzeem-ul-Tyari Portal 🌙 Est.
             5th Semester Finals 🌙
