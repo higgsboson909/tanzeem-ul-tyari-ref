@@ -22,7 +22,7 @@ export default function TodayTimingsCard({ timing, cityName }: TodayTimingsCardP
         animate={{ opacity: 1 }}
         className="minecraft-border p-6 text-center"
       >
-        <p className="minecraft-text text-[10px] text-muted-foreground">
+        <p className="minecraft-text text-mc-small text-muted-foreground">
           ⏳ Ramadan 2026 starts Feb 19
         </p>
       </motion.div>
