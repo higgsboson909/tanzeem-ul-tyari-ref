@@ -20,6 +20,7 @@ export default function RamadanPage() {
     todayTiming,
     changeCity,
     changeFiqh,
+    detectLocation,
     cities,
   } = usePrayerTimes();
 
