@@ -4,9 +4,20 @@ import { Clock, Sun, Star } from 'lucide-react';
 interface CountdownTimerProps {
   secondsLeft: number;
   countdownType: 'SEHRI' | 'IFTAR';
+  rozaNumber?: number | null;
+  sehriTime?: string | null;
+  iftarTime?: string | null;
+  cityName?: string;
 }
 
-export default function CountdownTimer({ secondsLeft, countdownType }: CountdownTimerProps) {
+function formatTimeAMPM(time: string): string {
+  const [h, m] = time.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour12 = h % 12 || 12;
+  return `${hour12.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${ampm}`;
+}
+
+export default function CountdownTimer({ secondsLeft, countdownType, rozaNumber, sehriTime, iftarTime, cityName }: CountdownTimerProps) {
   const hours = Math.floor(secondsLeft / 3600);
   const minutes = Math.floor((secondsLeft % 3600) / 60);
   const seconds = secondsLeft % 60;
@@ -22,10 +33,22 @@ export default function CountdownTimer({ secondsLeft, countdownType }: Countdown
       animate={{ opacity: 1, scale: 1 }}
       className="gold-bracket-card corner-brackets-bottom p-6 md:p-8 text-center"
     >
-      {/* Title */}
-      <div className="minecraft-text text-mc-small md:text-xs text-accent chaos-text mb-2">
+      {/* Title with Roza info */}
+      <div className="minecraft-text text-mc-small md:text-xs text-accent chaos-text mb-1">
         🌙 RAMADAN 2026 🌙
       </div>
+      {rozaNumber && (
+        <div className="minecraft-border inline-block px-4 py-1.5 bg-primary/10 animate-pulse-glow mb-2">
+          <span className="minecraft-text text-mc-small md:text-xs text-accent chaos-text">
+            ROZA #{rozaNumber}
+          </span>
+        </div>
+      )}
+      {sehriTime && iftarTime && (
+        <div className="minecraft-text text-mc-pixel text-muted-foreground mb-1">
+          {cityName ? `${cityName.toUpperCase()} — ` : ''}SEHRI {formatTimeAMPM(sehriTime)} · IFTAR {formatTimeAMPM(iftarTime)}
+        </div>
+      )}
       <div className="minecraft-text text-mc-small md:text-xs text-muted-foreground mb-6">
         {label}
       </div>
