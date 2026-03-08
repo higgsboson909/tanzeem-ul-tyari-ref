@@ -79,6 +79,8 @@ export default function HomePage() {
         currentCity={city}
         cities={cities}
         onCityChange={changeCity}
+        currentFiqh={fiqh}
+        onFiqhChange={changeFiqh}
         detecting={detecting} />
 
       {/* Countdown */}
