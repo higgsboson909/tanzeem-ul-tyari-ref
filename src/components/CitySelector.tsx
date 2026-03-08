@@ -70,6 +70,17 @@ export default function CitySelector({
         <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-accent pointer-events-none" />
       </div>
 
+      <button
+        onClick={toggleAzaan}
+        title={playing ? 'Stop azaan' : 'Preview azaan'}
+        className="minecraft-border p-2 bg-card border-border hover:border-primary transition-colors"
+      >
+        {playing
+          ? <VolumeX className="w-4 h-4 text-destructive" />
+          : <Volume2 className="w-4 h-4 text-accent" />}
+      </button>
+      </div>
+
 
       {/* Polished Fiqh Toggle with sliding indicator */}
       <div className="relative flex items-center minecraft-border overflow-hidden">
