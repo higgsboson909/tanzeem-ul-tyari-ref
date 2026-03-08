@@ -33,10 +33,7 @@ export default function CountdownTimer({ secondsLeft, countdownType, rozaNumber,
       animate={{ opacity: 1, scale: 1 }}
       className="gold-bracket-card corner-brackets-bottom p-6 md:p-8 text-center"
     >
-      {/* Title with Roza info */}
-      <div className="minecraft-text text-mc-small md:text-xs text-accent chaos-text mb-1">
-        🌙 RAMADAN 2026 🌙
-      </div>
+      {/* Roza badge */}
       {rozaNumber && (
         <div className="minecraft-border inline-block px-4 py-1.5 bg-primary/10 animate-pulse-glow mb-2">
           <span className="minecraft-text text-mc-small md:text-xs text-accent chaos-text">
@@ -44,12 +41,7 @@ export default function CountdownTimer({ secondsLeft, countdownType, rozaNumber,
           </span>
         </div>
       )}
-      {sehriTime && iftarTime && (
-        <div className="minecraft-text text-mc-pixel text-muted-foreground mb-1">
-          {cityName ? `${cityName.toUpperCase()} — ` : ''}SEHRI {formatTimeAMPM(sehriTime)} · IFTAR {formatTimeAMPM(iftarTime)}
-        </div>
-      )}
-      <div className="minecraft-text text-mc-small md:text-xs text-muted-foreground mb-6">
+      <div className="minecraft-text text-mc-small md:text-sm text-accent mb-6">
         {label}
       </div>
 
