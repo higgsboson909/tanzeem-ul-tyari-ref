@@ -31,20 +31,21 @@ export default function HomePage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-4">
+        className="minecraft-border p-6 md:p-10 lg:p-14 text-center space-y-4"
+      >
         
         
 
 
         
         
-        <h1 className="minecraft-text md:text-xl gradient-text text-4xl">
+        <h1 className="minecraft-text text-xl md:text-3xl lg:text-4xl gradient-text">
           TANZEEM-UL-TYARI
         </h1>
-        <p className="islamic-text text-lg md:text-2xl text-accent">
-          United by Panic
+        <p className="minecraft-text text-[10px] md:text-xs text-accent tracking-widest">
+          ⚔ UNITED BY PANIC ⚔
         </p>
-        <p className="minecraft-text text-[8px] text-muted-foreground">
+        <p className="minecraft-text text-[7px] md:text-[8px] text-muted-foreground">
           RAMADAN 2026 · FINAL EXAMS PREPARATION PORTAL
         </p>
       </motion.div>
