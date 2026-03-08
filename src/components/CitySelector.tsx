@@ -51,18 +51,6 @@ export default function CitySelector({
         <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-accent pointer-events-none" />
       </div>
 
-      {/* Detect location button */}
-      {onDetectLocation && (
-        <button
-          onClick={onDetectLocation}
-          disabled={detecting}
-          className="minecraft-border px-3 py-2 bg-card border-border text-accent hover:text-primary transition-colors disabled:opacity-50 flex items-center gap-1"
-          title="Detect my location"
-        >
-          <Locate className={`w-4 h-4 ${detecting ? 'animate-spin' : ''}`} />
-          <span className="minecraft-text text-mc-small hidden sm:inline">DETECT</span>
-        </button>
-      )}
 
       {/* Polished Fiqh Toggle with sliding indicator */}
       <div className="relative flex items-center minecraft-border overflow-hidden">
