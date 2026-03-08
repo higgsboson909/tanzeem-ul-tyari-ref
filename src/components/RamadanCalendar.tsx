@@ -98,20 +98,20 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
                       : 'hover:bg-muted/30'
                   }`}
                 >
-                  <td className={`minecraft-text text-mc-pixel p-2 ${isToday ? 'text-accent font-bold' : 'text-muted-foreground'}`}>
+                  <td className={`minecraft-text text-mc-small p-2 md:p-3 ${isToday ? 'text-accent font-bold' : 'text-muted-foreground'}`}>
                     {rozaNum}
                     {isToday && ' ◄'}
                   </td>
-                  <td className={`minecraft-text text-mc-pixel p-2 ${isToday ? 'text-accent' : 'text-foreground'}`}>
+                  <td className={`minecraft-text text-mc-small p-2 md:p-3 ${isToday ? 'text-accent' : 'text-foreground'}`}>
                     {formatDisplayDate(t.date)}
                   </td>
-                  <td className="minecraft-text text-mc-pixel text-muted-foreground p-2">
+                  <td className="minecraft-text text-mc-small text-muted-foreground p-2 md:p-3">
                     {getDayName(t.date)}
                   </td>
-                  <td className="minecraft-text text-mc-pixel text-foreground p-2 text-center">
+                  <td className="minecraft-text text-mc-small text-foreground p-2 md:p-3 text-center">
                     {formatTimeAMPM(t.sehri)}
                   </td>
-                  <td className="minecraft-text text-mc-pixel text-foreground p-2 text-center">
+                  <td className="minecraft-text text-mc-small text-foreground p-2 md:p-3 text-center">
                     {formatTimeAMPM(t.iftar)}
                   </td>
                 </tr>
