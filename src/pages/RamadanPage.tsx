@@ -73,11 +73,15 @@ export default function RamadanPage() {
         onFiqhChange={changeFiqh}
         detecting={detecting}
       />
-      {/* Countdown */}
-      <CountdownTimer secondsLeft={secondsLeft} countdownType={countdownType} />
-
-      {/* Today's Timings */}
-      <TodayTimingsCard timing={todayTiming} cityName={city} />
+      {/* Countdown with Roza info */}
+      <CountdownTimer
+        secondsLeft={secondsLeft}
+        countdownType={countdownType}
+        rozaNumber={todayTiming?.day ?? null}
+        sehriTime={todayTiming?.sehri ?? null}
+        iftarTime={todayTiming?.iftar ?? null}
+        cityName={city}
+      />
 
       {/* Full Calendar */}
       <RamadanCalendar timetable={timetable} />
