@@ -110,16 +110,31 @@ export function usePrayerTimes() {
       setCountdownType(next.countdownType);
       setSecondsLeft(next.secondsLeft);
 
-      // Find today's timing
       const todayStr = new Date().toISOString().slice(0, 10);
       const today = timetable.timings.find((t) => t.date === todayStr) || null;
       setTodayTiming(today);
+
+      // Show celebration overlay when countdown reaches 0
+      if (next.secondsLeft <= 0 && today) {
+        const overlayKey = `${todayStr}-${next.countdownType}`;
+        if (overlayDismissed !== overlayKey) {
+          setShowOverlay(next.countdownType === 'IFTAR' ? 'iftar' : 'sehri');
+        }
+      } else if (next.secondsLeft > 0) {
+        setShowOverlay(null);
+      }
     };
 
     update();
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
-  }, [timetable]);
+  }, [timetable, overlayDismissed]);
+
+  const dismissOverlay = useCallback(() => {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    setOverlayDismissed(`${todayStr}-${countdownType}`);
+    setShowOverlay(null);
+  }, [countdownType]);
 
   return {
     city,
@@ -130,5 +145,7 @@ export function usePrayerTimes() {
     todayTiming,
     changeCity,
     cities: PAKISTAN_CITIES,
+    showOverlay,
+    dismissOverlay,
   };
 }
