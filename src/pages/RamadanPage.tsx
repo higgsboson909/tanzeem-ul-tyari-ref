@@ -3,7 +3,7 @@ import { usePrayerTimes } from '@/hooks/usePrayerTimes';
 import { useRamadanState } from '@/hooks/useRamadanState';
 import CitySelector from '@/components/CitySelector';
 import CountdownTimer from '@/components/CountdownTimer';
-import TodayTimingsCard from '@/components/TodayTimingsCard';
+
 import RamadanCalendar from '@/components/RamadanCalendar';
 import BigCountdownOverlay from '@/components/BigCountdownOverlay';
 import SehriIftarOverlay from '@/components/SehriIftarOverlay';
