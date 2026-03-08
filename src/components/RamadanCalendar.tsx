@@ -27,6 +27,32 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
 
   const todayStr = new Date().toISOString().slice(0, 10);
 
+  // Filter: only show today and future days
+  const filteredTimings = timetable.timings.filter((t) => t.date >= todayStr);
+
+  // Calculate Roza number: day 1 = first day in timetable
+  const firstDate = timetable.timings[0]?.date;
+  const getRozaNumber = (dateStr: string) => {
+    if (!firstDate) return 0;
+    const start = new Date(firstDate + 'T00:00:00');
+    const current = new Date(dateStr + 'T00:00:00');
+    return Math.floor((current.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  };
+
+  if (filteredTimings.length === 0) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="minecraft-border p-6 text-center"
+      >
+        <p className="minecraft-text text-[10px] text-muted-foreground">
+          🎉 Ramadan 2026 has ended. May Allah accept your fasts!
+        </p>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -35,7 +61,7 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
       className="minecraft-border p-4 md:p-6"
     >
       <div className="minecraft-text text-[10px] text-muted-foreground text-center mb-4">
-        📋 RAMADAN 2026 TIMETABLE — {timetable.city.toUpperCase()}
+        📋 REMAINING RAMADAN DAYS — {timetable.city.toUpperCase()}
       </div>
 
       <div className="overflow-x-auto">
@@ -43,7 +69,7 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
           <thead>
             <tr>
               <th className="minecraft-text text-[8px] text-muted-foreground p-2 text-left border-b border-border">
-                #
+                ROZA
               </th>
               <th className="minecraft-text text-[8px] text-muted-foreground p-2 text-left border-b border-border">
                 DATE
@@ -60,8 +86,9 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
             </tr>
           </thead>
           <tbody>
-            {timetable.timings.map((t, i) => {
+            {filteredTimings.map((t) => {
               const isToday = t.date === todayStr;
+              const rozaNum = getRozaNumber(t.date);
               return (
                 <tr
                   key={t.date}
@@ -71,8 +98,9 @@ export default function RamadanCalendar({ timetable }: RamadanCalendarProps) {
                       : 'hover:bg-muted/30'
                   }`}
                 >
-                  <td className="minecraft-text text-[8px] text-muted-foreground p-2">
-                    {i + 1}
+                  <td className={`minecraft-text text-[8px] p-2 ${isToday ? 'text-accent font-bold' : 'text-muted-foreground'}`}>
+                    {rozaNum}
+                    {isToday && ' ◄'}
                   </td>
                   <td className={`minecraft-text text-[8px] p-2 ${isToday ? 'text-accent' : 'text-foreground'}`}>
                     {formatDisplayDate(t.date)}
