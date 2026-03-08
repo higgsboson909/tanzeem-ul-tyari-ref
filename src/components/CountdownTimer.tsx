@@ -21,7 +21,7 @@ export default function CountdownTimer({ secondsLeft, countdownType }: Countdown
       animate={{ opacity: 1, scale: 1 }}
       className="minecraft-border p-6 md:p-8 text-center"
     >
-      <div className="minecraft-text text-[10px] md:text-xs text-muted-foreground mb-4">
+      <div className="minecraft-text text-mc-small md:text-xs text-muted-foreground mb-4">
         {label}
       </div>
 
